@@ -1,16 +1,19 @@
-import React from "react";
-import Sidebar from "../components/Sidebar";
+import { useState } from "react";
 import UserMessagesList from "../components/UserMessagesList";
 import MessagesInterface from "../components/MessagesInterface";
 
 const Homepage = () => {
+  const [selectedUserConversation, setSelectedUserConversation] =
+    useState(null);
+
   return (
-    <div className="min-h-screen flex rounded-lg">
-      {/* sidebar */}
-      <Sidebar />
-      <UserMessagesList />
-      <MessagesInterface />
-    </div>
+    <>
+      <UserMessagesList
+        selectedUserConversation={selectedUserConversation}
+        setSelectedUserConversation={setSelectedUserConversation}
+      />
+      <MessagesInterface selectedUserConversation={selectedUserConversation} />
+    </>
   );
 };
 

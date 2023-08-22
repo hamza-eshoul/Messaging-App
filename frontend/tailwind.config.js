@@ -7,6 +7,8 @@ export default {
         primaryDark: "#1A1B1C",
         primaryOrange: "#fa4d12",
         secondaryOrange: "#eb430b",
+        lightOrange: "#fcebe5",
+        primaryGray: "#eff1f2",
       },
     },
   },

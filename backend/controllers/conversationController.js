@@ -4,10 +4,19 @@ exports.get_conversation = async (req, res) => {
   const { user1_id, user2_id } = req.body;
 
   try {
-    const conversation = await Conversation.findOne({ user1_id, user2_id });
+    const conversation = await Conversation.findOne({
+      $or: [
+        { user1_id, user2_id },
+        { user1_id: user2_id, user2_id: user1_id },
+      ],
+    });
 
     if (conversation) {
       res.status(200).json(conversation);
+    } else {
+      res
+        .status(200)
+        .json({ msg: "There are no messages in this conversation yet ..." });
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -15,27 +24,32 @@ exports.get_conversation = async (req, res) => {
 };
 
 exports.add_message = async (req, res) => {
-  const { user1_id, user2_id, content } = req.body;
+  const { user1_id, user2_id, author, content } = req.body;
 
   try {
     // Check if conversation exists
-    const exists = await Conversation.findOne({ user1_id, user2_id });
+    const exists = await Conversation.findOne({
+      $or: [
+        { user1_id, user2_id },
+        { user1_id: user2_id, user2_id: user1_id },
+      ],
+    });
 
     // Push message to existing conversation
     if (exists) {
-      const pushMessage = await Conversation.findByIdAndUpdate(
+      const pushedMessage = await Conversation.findByIdAndUpdate(
         exists._id,
         {
           $push: {
-            messages: { author: user1_id, content },
+            messages: { author_id: user1_id, author, content },
           },
         },
         { new: true }
       );
 
-      await pushMessage.save();
+      await pushedMessage.save();
 
-      res.status(200).json(pushMessage);
+      res.status(200).json(pushedMessage);
     }
     // Create new conversation with a first message
     else {
@@ -44,7 +58,8 @@ exports.add_message = async (req, res) => {
         user2_id,
         messages: [
           {
-            author: user1_id,
+            author_id: user1_id,
+            author,
             content,
           },
         ],

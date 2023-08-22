@@ -1,41 +1,14 @@
-import React, { useEffect, useState } from "react";
 import { RiMenuFoldFill } from "react-icons/ri";
 import { MoonLoader } from "react-spinners";
 import MessageCardPreview from "./MessageCardPreview";
-import { useAuthContext } from "../hooks/useAuthContext";
 
-const UserMessagesList = () => {
-  const [loading, setLoading] = useState(null);
-  const [error, setError] = useState(null);
-  const [usersList, setUsersList] = useState(null);
-  const { user } = useAuthContext();
+import { useFetchUsers } from "../hooks/useFetchUsers";
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      setLoading(true);
-      setError(null);
-
-      const response = await fetch("http://localhost:4000/user");
-
-      const json = await response.json();
-
-      if (!response.ok) {
-        setLoading(false);
-        setError("User messages could not be fetched");
-      }
-
-      if (response.ok) {
-        const users = json.filter((item) => item.email !== user.email);
-
-        setLoading(false);
-        setUsersList(users);
-      }
-    };
-
-    if (user) {
-      fetchUsers();
-    }
-  }, [user]);
+const UserMessagesList = ({
+  selectedUserConversation,
+  setSelectedUserConversation,
+}) => {
+  const { loading, error, usersList } = useFetchUsers();
 
   return (
     <section className="border-r-[1px] border-zinc-300 w-[25%]">
@@ -70,8 +43,9 @@ const UserMessagesList = () => {
                   usersList.map((user) => (
                     <MessageCardPreview
                       key={user._id}
-                      firstName={user.firstName}
-                      lastName={user.lastName}
+                      user={user}
+                      selectedUserConversation={selectedUserConversation}
+                      setSelectedUserConversation={setSelectedUserConversation}
                     />
                   ))}{" "}
               </>

@@ -12,8 +12,12 @@ const conversationSchema = new Schema({
   },
   messages: [
     {
-      author: {
+      author_id: {
         type: String,
+        required: true,
+      },
+      author: {
+        type: "String",
         required: true,
       },
       content: {

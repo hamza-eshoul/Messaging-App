@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import defaultProfile from "../images/defaultProfile.png";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { format } from "date-fns";
 
-const MessageCard = ({ isUser, messageContent }) => {
+const MessageCard = ({ message }) => {
+  const [isUser, setIsUser] = useState(null);
+  const { user } = useAuthContext();
+  const [formattedDate, setFormattedDate] = useState(null);
+
+  useEffect(() => {
+    const formattedMonthDate = format(new Date(message.createdAt), "PP").split(
+      ","
+    )[0];
+
+    const formattedHourDate = format(new Date(message.createdAt), "p");
+
+    setFormattedDate(formattedMonthDate + ", " + formattedHourDate);
+
+    if (user) {
+      if (message.author_id === user._id) {
+        setIsUser(true);
+      }
+    }
+  }, [message, user]);
+
   return (
     <div
       className={`flex ${
         isUser ? "justify-end" : ""
-      } gap-3 items-center py-5 px-4`}
+      } gap-3 items-center py-3 px-4  `}
     >
       {/* image */}
 
@@ -23,19 +45,19 @@ const MessageCard = ({ isUser, messageContent }) => {
       {/* card information */}
       <div className="flex flex-col gap-1">
         {" "}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-4">
           <span className="text-sm text-zinc-900">
-            {isUser ? "You" : "Hamza Eshoul"}
+            {isUser ? "You" : <> {message.author} </>}
           </span>
-          <span className="text-zinc-500 text-xs"> Friday 2:20pm</span>
+          <span className="text-zinc-500 text-xs"> {formattedDate}</span>
         </div>
         {/* card message */}
         <p
           className={`${
             isUser ? "bg-primaryOrange text-white" : "bg-white"
-          } rounded-b-lg rounded-tr-lg shadow-md text-sm p-3`}
+          } max-w-[500px] rounded-b-lg rounded-tr-lg shadow-md text-sm p-3`}
         >
-          {messageContent}
+          {message.content}
         </p>
       </div>
     </div>

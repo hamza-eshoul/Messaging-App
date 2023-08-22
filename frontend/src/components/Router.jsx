@@ -4,19 +4,22 @@ import Homepage from "../pages/Homepage";
 import App from "../App";
 import Login from "../pages/Login";
 import Singup from "../pages/Signup";
+import Profile from "../pages/Profile";
 
 const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <App />,
+
+      children: [
+        { path: "homepage", element: <Homepage /> },
+        { path: "profile", element: <Profile /> },
+      ],
     },
+
     { path: "/login", element: <Login /> },
     { path: "/signup", element: <Singup /> },
-    {
-      path: "/homepage",
-      element: <Homepage />,
-    },
   ]);
 
   return <RouterProvider router={router} />;

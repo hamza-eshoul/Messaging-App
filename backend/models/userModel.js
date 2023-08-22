@@ -16,6 +16,10 @@ const userSchema = new Schema(
       required: true,
       unique: true,
     },
+    profileImg: {
+      type: "String",
+      default: "",
+    },
     password: {
       type: String,
       required: true,

@@ -9,59 +9,91 @@ import { useAddMessage } from "../hooks/useAddMessage";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useFetchConversation } from "../hooks/useFetchConversation";
 import { MoonLoader } from "react-spinners";
+import { DefaultMessageInterface } from "./DefaultMessageInterface";
 
-const MessagesInterface = () => {
+const MessagesInterface = ({ selectedUserConversation }) => {
   const { user } = useAuthContext();
   const [messageContent, setMessageContent] = useState("");
   const [messagesList, setMessagesList] = useState(null);
+  const [emptyMessagesList, setEmptyMessagesList] = useState(null);
 
   const { addMessage } = useAddMessage();
   const { fetchConversation, loading, error } = useFetchConversation();
 
   const handleAddMessage = async () => {
     const user1_id = user._id;
-    const user2_id = "64d61feafa2d311e2220a8e9";
+    const user2_id = selectedUserConversation._id;
+    const messageAuthor = user.firstName + " " + user.lastName;
 
-    await addMessage(user1_id, user2_id, messageContent);
+    const updatedConversation = await addMessage(
+      user1_id,
+      user2_id,
+      messageAuthor,
+      messageContent
+    );
+
+    setMessageContent("");
+
+    setMessagesList(updatedConversation.messages);
+    setEmptyMessagesList(null);
   };
 
   useEffect(() => {
     const conversation = async () => {
-      const convo = await fetchConversation(
-        user._id,
-        "64d61feafa2d311e2220a8e9"
-      );
+      const selectedUserConversationId = selectedUserConversation._id;
+      setEmptyMessagesList(null);
+      setMessagesList(null);
+      const res = await fetchConversation(user._id, selectedUserConversationId);
 
-      console.log(convo.messages);
-      setMessagesList(convo.messages);
+      if (res.messages) {
+        setEmptyMessagesList(null);
+        setMessagesList(res.messages);
+      } else {
+        setMessagesList(null);
+        setEmptyMessagesList(res.msg);
+      }
     };
 
-    if (user) {
+    if (user && selectedUserConversation) {
       conversation();
     }
-  }, [user]);
+  }, [user, selectedUserConversation]);
 
   return (
-    <section className="w-[calc(75%-96px)]">
+    // {selectedUserConversation ?  : <DefaultMessageInterface />}
+    <section className="flex flex-col w-[calc(75%-96px)]">
       {/* Header */}
       <div className="flex gap-3 items-center border-b-[1px] border-zinc-300 py-4 px-4">
         {/* image */}
-        <div className="h-10 w-10">
-          <img
-            src={defaultProfile}
-            alt="user messager"
-            className="w-full h-full rounded-full"
-          />
-        </div>
+        {selectedUserConversation && (
+          <div className="h-10 w-10">
+            <img
+              src={
+                selectedUserConversation.profileImg
+                  ? selectedUserConversation.profileImg
+                  : defaultProfile
+              }
+              alt="user messager"
+              className="w-full h-full rounded-full"
+            />
+          </div>
+        )}
 
-        {/* userinformation */}
+        {/* User information */}
 
         <div className="flex items-center justify-between w-full">
-          <div className="flex flex-col">
-            {" "}
-            <span className="font-medium">Hamza Eshoul</span>
-            <p className="text-zinc-500 text-xs">hamza.eshoul.pro@gmail.com</p>
-          </div>
+          {selectedUserConversation && (
+            <div className="flex flex-col">
+              {" "}
+              <span className="font-medium">
+                {selectedUserConversation.firstName}{" "}
+                {selectedUserConversation.lastName}
+              </span>
+              <p className="text-zinc-500 text-xs">
+                {selectedUserConversation.email}
+              </p>
+            </div>
+          )}
 
           <div className="flex gap-2">
             <FiSearch className="text-2xl" />
@@ -72,9 +104,9 @@ const MessagesInterface = () => {
 
       {/* Main */}
 
-      <div className="h-[calc(100%-73px)] flex flex-col justify-between bg-[#fbf5f3] dotted-background">
+      <div className="flex-grow flex flex-col justify-between bg-[#fbf5f3] dotted-background">
         {/* Message Interface Body */}
-        {loading ? (
+        {loading && (
           <div className="flex justify-center items-center h-full">
             {" "}
             <MoonLoader
@@ -85,36 +117,27 @@ const MessagesInterface = () => {
               data-testid="loader"
             />
           </div>
-        ) : (
-          <>
-            {
-              error ? (
-                <div> {error} </div>
-              ) : (
-                <>
-                  {" "}
-                  {messagesList &&
-                    messagesList.map((message) => (
-                      <MessageCard
-                        key={message._id}
-                        messageContent={message.content}
-                        isUser={true}
-                      />
-                    ))}{" "}
-                </>
-              )
+        )}
+        {error && (
+          <div className="flex justify-center items-center h-full text-primaryOrange text-2xl font-semibold">
+            {" "}
+            {error}{" "}
+          </div>
+        )}
 
-              // <div>
-              //   <MessageCard />
-              //   <MessageCard isUser={true} />
-              //   <MessageCard />
-              //   <MessageCard isUser={true} />
-              //   <MessageCard />
-              //   <MessageCard isUser={true} />
-              //   <MessageCard />
-              // </div>
-            }
-          </>
+        {emptyMessagesList && (
+          <div className="flex items-center justify-center h-full text-primaryOrange text-2xl font-semibold">
+            {" "}
+            {emptyMessagesList}{" "}
+          </div>
+        )}
+
+        {messagesList && (
+          <div className="flex flex-col gap-2">
+            {messagesList.map((message) => (
+              <MessageCard key={message._id} message={message} />
+            ))}
+          </div>
         )}
 
         {/* Message Sending */}
@@ -132,7 +155,11 @@ const MessagesInterface = () => {
             </div>
 
             <RiSendPlane2Line
-              className="text-2xl text-primaryOrange cursor-pointer"
+              className={
+                messageContent.length === 0
+                  ? "text-2xl pointer-events-none opacity-30"
+                  : "text-2xl text-primaryOrange cursor-pointer"
+              }
               onClick={handleAddMessage}
             />
           </div>
