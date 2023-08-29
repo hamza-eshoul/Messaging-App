@@ -1,5 +1,15 @@
 const Conversation = require("../models/conversation");
 
+exports.get_conversations = async (req, res) => {
+  try {
+    const conversations = await Conversation.find();
+
+    res.status(200).json(conversations);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 exports.get_conversation = async (req, res) => {
   const { user1_id, user2_id } = req.body;
 
@@ -11,20 +21,14 @@ exports.get_conversation = async (req, res) => {
       ],
     });
 
-    if (conversation) {
-      res.status(200).json(conversation);
-    } else {
-      res
-        .status(200)
-        .json({ msg: "There are no messages in this conversation yet ..." });
-    }
+    res.status(200).json(conversation);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
 exports.add_message = async (req, res) => {
-  const { user1_id, user2_id, author, content } = req.body;
+  const { user1_id, user2_id, author, content, authorImg } = req.body;
 
   try {
     // Check if conversation exists
@@ -41,7 +45,7 @@ exports.add_message = async (req, res) => {
         exists._id,
         {
           $push: {
-            messages: { author_id: user1_id, author, content },
+            messages: { author_id: user1_id, author, content, authorImg },
           },
         },
         { new: true }
@@ -61,6 +65,7 @@ exports.add_message = async (req, res) => {
             author_id: user1_id,
             author,
             content,
+            authorImg,
           },
         ],
       });
@@ -69,6 +74,35 @@ exports.add_message = async (req, res) => {
 
       res.status(200).json(conversation);
     }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+exports.delete_message = async (req, res) => {
+  const { user1_id, user2_id, message_id } = req.body;
+
+  try {
+    const conversation = await Conversation.findOne({
+      $or: [
+        { user1_id, user2_id },
+        { user1_id: user2_id, user2_id: user1_id },
+      ],
+    });
+
+    const updateConversationMessages = await Conversation.findByIdAndUpdate(
+      conversation._id,
+      {
+        $pull: {
+          messages: {
+            _id: message_id,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json(updateConversationMessages);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

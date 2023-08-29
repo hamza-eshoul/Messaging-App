@@ -6,6 +6,13 @@
   .sidebarIconsContainer {
     @apply flex flex-col gap-8 justify-center items-center text-zinc-400 text-2xl pt-6;
   }
+  .activeSidebarIcons {
+    @apply border-l-[3px] border-secondaryOrange w-full flex justify-center h-12 items-center cursor-pointer text-white bg-gradient-to-l from-zinc-700/20 from-10% to-secondaryOrange/30 to-90%;
+  }
+
+  .sidebarIcon {
+    @apply cursor-pointer hover:text-white hover:scale-110 transition duration-300 ease-in-out;
+  }
 }
 
 .dotted-background {
@@ -14,5 +21,54 @@
 }
 
 .profileMainCompetencies {
-  @apply bg-zinc-200/50 px-3 py-1.5 rounded text-sm font-medium;
+  @apply bg-zinc-200/50 px-3 py-1.5 rounded text-sm font-medium hover:opacity-60;
+}
+
+.custom-border {
+  position: relative;
+  width: 50%;
+  height: 300px;
+  background: white;
+  border-radius: 5px;
+}
+
+.glow::before,
+.glow::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(
+    45deg,
+    #ff6000,
+    #00ffff,
+    #ff00ff,
+    #ff0099,
+    #6e0dd0,
+    #ff3300,
+    #099fff
+  );
+  background-size: 400%;
+  width: calc(100% + 5px);
+  height: calc(100% + 5px);
+  z-index: -1;
+  animation: animate 20s linear infinite;
+  border-radius: 5px;
+}
+
+@keyframes animate {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.glow::after {
+  filter: blur(2px);
+  opacity: 0.99;
 }

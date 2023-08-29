@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import defaultProfile from "../images/defaultProfile.png";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { BsCheck2All } from "react-icons/bs";
+import { formatDistance } from "date-fns";
 
 const MessageCardPreview = ({
   user,
   selectedUserConversation,
   setSelectedUserConversation,
+  conversations,
 }) => {
   const [selectedConversation, setSelectedConversation] = useState(null);
+  const [previewMessage, setPreviewMessage] = useState(null);
+  const [previewMessageTime, setPreviewMessageTime] = useState(null);
+
+  const { user: loggedUser } = useAuthContext();
 
   useEffect(() => {
     if (selectedUserConversation) {
@@ -18,13 +26,61 @@ const MessageCardPreview = ({
     }
   }, [selectedUserConversation]);
 
+  const populateUserConversation = (conversation) => {
+    if (conversation.messages.length !== 0) {
+      let lastMessage =
+        conversation.messages[conversation.messages.length - 1].content;
+
+      let messageTime = conversation.updatedAt;
+
+      let formattedMessageTime = formatDistance(
+        new Date(messageTime),
+        new Date(),
+        {
+          addSuffix: true,
+        }
+      );
+
+      if (lastMessage.length > 49) {
+        lastMessage = lastMessage.substring(0, 45) + "...";
+      }
+
+      setPreviewMessage(lastMessage);
+      setPreviewMessageTime(formattedMessageTime);
+    } else {
+      populateEmptyConversation();
+    }
+  };
+
+  const populateEmptyConversation = () => {
+    const userName = user.firstName + " " + user.lastName;
+    setPreviewMessage(`Chat with  ${userName} ...`);
+  };
+
+  useEffect(() => {
+    populateEmptyConversation();
+
+    if (conversations) {
+      conversations.map((conversation) => {
+        if (
+          (conversation.user1_id == user._id &&
+            conversation.user2_id == loggedUser._id) ||
+          (conversation.user1_id == loggedUser._id &&
+            conversation.user2_id == user._id)
+        ) {
+          populateUserConversation(conversation);
+        }
+      });
+    }
+  }, [conversations]);
+
   return (
     <div
       className={`${
         selectedConversation
           ? "bg-lightOrange border-l-[2.5px] border-l-secondaryOrange "
           : "border-b-[1px] border-zinc-300"
-      } flex gap-3 items-center py-5 px-4 cursor-pointer `}
+      } flex gap-3 items-center py-[21.6px] px-4 cursor-pointer `}
       onClick={() => {
         setSelectedUserConversation(user);
       }}
@@ -32,7 +88,7 @@ const MessageCardPreview = ({
       {/* image */}
       <div className="h-12 w-12">
         <img
-          src={user.profileImg ? user.profileImg : defaultProfile}
+          src={user.profileImg.url ? user.profileImg.url : defaultProfile}
           alt="user messager"
           className="w-full h-full rounded-full"
         />
@@ -49,7 +105,12 @@ const MessageCardPreview = ({
           >
             {user.firstName} {user.lastName}
           </span>
-          <span className="text-zinc-500 text-xs"> 2m ago</span>
+          {previewMessageTime && (
+            <span className="text-zinc-500 text-xs">
+              {" "}
+              {previewMessageTime}{" "}
+            </span>
+          )}
         </div>
         <div className="flex items-center justify-between gap-2">
           <p
@@ -59,11 +120,9 @@ const MessageCardPreview = ({
                 : "text-zinc-500"
             } text-sm`}
           >
-            Sure let me tell you about what is going on and ...
+            {previewMessage && <span>{previewMessage}</span>}
           </p>
-          <div className="text-xs text-white bg-secondaryOrange px-1.5 py-0.5 rounded-full">
-            6{" "}
-          </div>
+          <BsCheck2All className="text-primaryOrange text-lg" />
         </div>
       </div>
     </div>

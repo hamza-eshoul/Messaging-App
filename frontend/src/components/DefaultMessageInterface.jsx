@@ -1,5 +1,18 @@
 import React from "react";
+import logo from "../images/logo.png";
 
 export const DefaultMessageInterface = () => {
-  return <div>Hello From Default Message Interface </div>;
+  return (
+    <section className="flex justify-center pt-96 w-[calc(75%-96px)] bg-primaryGray z-[-2]">
+      {" "}
+      <div className="custom-border glow flex flex-col items-center justify-center gap-5 p-10">
+        <div>
+          <img src={logo} />
+        </div>
+        <h2 className="text-4xl font-medium text-center">
+          Welcome to the Odin Messaging App !
+        </h2>
+      </div>
+    </section>
+  );
 };

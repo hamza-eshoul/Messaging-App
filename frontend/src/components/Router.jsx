@@ -1,5 +1,9 @@
 import React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import Homepage from "../pages/Homepage";
 import App from "../App";
 import Login from "../pages/Login";
@@ -14,7 +18,7 @@ const Router = () => {
 
       children: [
         { path: "homepage", element: <Homepage /> },
-        { path: "profile", element: <Profile /> },
+        { path: "profile/:id", element: <Profile /> },
       ],
     },
 

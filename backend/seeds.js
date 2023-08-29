@@ -6,8 +6,20 @@ async function createRandomUser() {
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     email: faker.internet.email(),
-    profileImg: faker.image.avatar(),
+    profileImg: {
+      public_id: "",
+      url: faker.image.avatar(),
+    },
+    coverImg: {
+      public_id: "",
+      url: faker.image.url(),
+    },
     password: faker.internet.password(),
+    profession: faker.person.jobType(),
+    employer: faker.company.name(),
+    location: faker.location.city() + " , " + faker.location.country(),
+    aboutUser: faker.person.bio(),
+    skills: ["Finance", "Corporate Finance", "Accounting"],
   });
 
   await fakeUser.save();
@@ -15,7 +27,7 @@ async function createRandomUser() {
 
 const createMultipleUsers = () => {
   return faker.helpers.multiple(createRandomUser, {
-    count: 15,
+    count: 20,
   });
 };
 

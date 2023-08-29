@@ -17,12 +17,48 @@ const userSchema = new Schema(
       unique: true,
     },
     profileImg: {
-      type: "String",
-      default: "",
+      public_id: {
+        type: String,
+        default: "",
+      },
+      url: {
+        type: String,
+        default: "",
+      },
+    },
+    coverImg: {
+      public_id: {
+        type: String,
+        default: "",
+      },
+      url: {
+        type: String,
+        default: "",
+      },
     },
     password: {
       type: String,
       required: true,
+    },
+    profession: {
+      type: String,
+      required: false,
+    },
+    employer: {
+      type: String,
+      required: false,
+    },
+    location: {
+      type: String,
+      required: false,
+    },
+    aboutUser: {
+      type: String,
+      required: false,
+    },
+    skills: {
+      type: Array,
+      required: false,
     },
   },
   { timestamps: true }
