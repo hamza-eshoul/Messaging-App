@@ -1,14 +1,11 @@
-import React from "react";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
-import Homepage from "../pages/Homepage";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+// components
+import Homepage from "../pages/Home/Homepage";
 import App from "../App";
 import Login from "../pages/Login";
 import Singup from "../pages/Signup";
-import Profile from "../pages/Profile";
+import Profile from "../pages/Profile/Profile";
 
 const Router = () => {
   const router = createBrowserRouter([

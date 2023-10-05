@@ -4,7 +4,7 @@ import { MdMode } from "react-icons/md";
 import { MoonLoader } from "react-spinners";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-export const EditAboutMe = ({ setEditAboutMe, setUserProfile }) => {
+const EditAboutMe = ({ setEditAboutMe, setUserProfile }) => {
   const [isLoading, setIsLoading] = useState(null);
   const [error, setError] = useState(null);
   const [aboutMe, setAboutMe] = useState("");
@@ -121,3 +121,5 @@ export const EditAboutMe = ({ setEditAboutMe, setUserProfile }) => {
     </form>
   );
 };
+
+export default EditAboutMe;

@@ -2,41 +2,40 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "./useAuthContext";
 
-export const useFetchAuth = () => {
+export const useSignup = () => {
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [isPending, setIsPending] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useAuthContext();
 
-  const fetchAuth = async (authType, authData) => {
-    setLoading(true);
+  const signup = async (firstName, lastName, email, password) => {
+    setIsPending(true);
     setError(null);
 
-    const response = await fetch(`http://localhost:4000/user/${authType}`, {
+    const response = await fetch("http://localhost:4000/user/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(authData),
+      body: JSON.stringify({ firstName, lastName, email, password }),
     });
 
     const json = await response.json();
 
     if (!response.ok) {
-      setLoading(false);
+      setIsPending(false);
       setError(json.error);
     }
 
     if (response.ok) {
-      setLoading(false);
+      setIsPending(false);
 
       localStorage.setItem("user", JSON.stringify(json));
-
-      dispatch({ type: `${authType}`, payload: json });
+      dispatch({ type: "LOGIN", payload: json });
 
       navigate("/homepage");
     }
   };
 
-  return { fetchAuth, loading, error };
+  return { signup, isPending, error };
 };

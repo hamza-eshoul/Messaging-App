@@ -1,7 +1,6 @@
-import React from "react";
 import logo from "../images/logo.png";
 
-export const DefaultMessageInterface = () => {
+const DefaultMessageInterface = () => {
   return (
     <section className="flex justify-center pt-96 w-[calc(75%-96px)] bg-primaryGray z-[-2]">
       {" "}
@@ -16,3 +15,5 @@ export const DefaultMessageInterface = () => {
     </section>
   );
 };
+
+export default DefaultMessageInterface;

@@ -1,9 +1,14 @@
-import React, { useState } from "react";
-import dashboard from "../images/dashboard-messaging.png";
-import logo from "../images/logo.png";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSignup } from "../hooks/useSignup";
-import { MoonLoader } from "react-spinners";
+
+// images
+import dashboard from "../images/dashboard-messaging.png";
+import logo from "../images/logo.png";
+
+// components
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");
@@ -11,7 +16,7 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { signup, loading, error } = useSignup();
+  const { signup, isPending, error } = useSignup();
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
@@ -95,23 +100,19 @@ const Signup = () => {
           </div>
 
           <button className="h-12 flex justify-center items-center bg-primaryOrange text-white font-semibold rounded-md w-full py-2">
-            {loading ? (
-              <MoonLoader
-                color={"#ffffff"}
-                loading={loading}
-                size={25}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
+            {isPending ? (
+              <Loading loadingColor="#ffffff" loadingSize={30} />
             ) : (
               "Sign up"
             )}
           </button>
 
           {error && (
-            <div className="text-primaryOrange font-semibold text-lg text-center">
-              {error}
-            </div>
+            <Error
+              error={error}
+              errorColor={"text-primaryOrange"}
+              errorSize={"text-lg"}
+            />
           )}
         </form>
       </div>

@@ -1,5 +1,9 @@
+import { useState } from "react";
+
 export const useAddMessage = () => {
-  const addMessage = async (user1_id, user2_id, author, content, authorImg) => {
+  const [error, setError] = useState(null);
+
+  const addMessage = async (messageInfo) => {
     const response = await fetch(
       "http://localhost:4000/conversation/add_message",
       {
@@ -8,21 +12,21 @@ export const useAddMessage = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          user1_id,
-          user2_id,
-          author,
-          content,
-          authorImg,
+          ...messageInfo,
         }),
       }
     );
 
     const json = await response.json();
 
+    if (!response.ok) {
+      setError(json.error);
+    }
+
     if (response.ok) {
       return json;
     }
   };
 
-  return { addMessage };
+  return { addMessage, error };
 };

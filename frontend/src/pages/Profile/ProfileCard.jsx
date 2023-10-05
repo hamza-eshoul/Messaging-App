@@ -1,6 +1,6 @@
 import React from "react";
 
-export const ProfileCard = ({ cardTitle, children }) => {
+const ProfileCard = ({ cardTitle, children }) => {
   return (
     <div className="bg-white rounded-xl border-[1px] shadow-sm  space-y-3 px-4 py-5">
       <h2 className="font-semibold">{cardTitle}</h2>
@@ -8,3 +8,5 @@ export const ProfileCard = ({ cardTitle, children }) => {
     </div>
   );
 };
+
+export default ProfileCard;

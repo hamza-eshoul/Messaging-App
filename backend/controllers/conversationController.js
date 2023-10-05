@@ -28,7 +28,7 @@ exports.get_conversation = async (req, res) => {
 };
 
 exports.add_message = async (req, res) => {
-  const { user1_id, user2_id, author, content, authorImg } = req.body;
+  const { user1_id, user2_id, author, content, authorImage } = req.body;
 
   try {
     // Check if conversation exists
@@ -45,7 +45,7 @@ exports.add_message = async (req, res) => {
         exists._id,
         {
           $push: {
-            messages: { author_id: user1_id, author, content, authorImg },
+            messages: { author_id: user1_id, author, content, authorImage },
           },
         },
         { new: true }
@@ -65,7 +65,7 @@ exports.add_message = async (req, res) => {
             author_id: user1_id,
             author,
             content,
-            authorImg,
+            authorImage,
           },
         ],
       });

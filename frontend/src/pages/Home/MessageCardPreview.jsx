@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
-import defaultProfile from "../images/defaultProfile.png";
-import { useAuthContext } from "../hooks/useAuthContext";
-import { BsCheck2All } from "react-icons/bs";
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import { formatDistance } from "date-fns";
+
+// images
+import defaultProfile from "../../images/defaultProfile.png";
+
+// icons
+import { BsCheck2All } from "react-icons/bs";
 
 const MessageCardPreview = ({
   user,

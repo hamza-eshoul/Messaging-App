@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import UserMessagesList from "../components/UserMessagesList";
-import MessagesInterface from "../components/MessagesInterface";
 import { io } from "socket.io-client";
+
+// components
+import UserMessagesList from "./UserMessagesList";
+import MessagesInterface from "./MessagesInterface";
 
 const Homepage = () => {
   const [selectedUserConversation, setSelectedUserConversation] =

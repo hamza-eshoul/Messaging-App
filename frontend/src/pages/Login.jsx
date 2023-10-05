@@ -1,18 +1,23 @@
-import React, { useState } from "react";
-import dashboard from "../images/dashboard-messaging.png";
-import { CgProfile } from "react-icons/cg";
-import logo from "../images/logo.png";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/useLogin";
-import { MoonLoader } from "react-spinners";
-import { useDemoLogin } from "../hooks/useDemoLogin";
+
+// images
+import logo from "../images/logo.png";
+import dashboard from "../images/dashboard-messaging.png";
+
+// icons
+import { CgProfile } from "react-icons/cg";
+
+// components
+import Loading from "../components/Loading";
+import Error from "../components/Error";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login, loading, error } = useLogin();
-  const { demoLogin, demoLoading, demoError } = useDemoLogin();
+  const { login, isPending, isDemoPending, error, demoError } = useLogin();
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +26,11 @@ const Login = () => {
   };
 
   const handleDemoAccountLogin = async () => {
-    await demoLogin("hamza.eshoul.pro@gmail.com", "Hamzahamza1");
+    await login(
+      import.meta.env.VITE_DEMO_EMAIL,
+      import.meta.env.VITE_DEMO_PASSWORD,
+      true
+    );
   };
 
   return (
@@ -78,14 +87,8 @@ const Login = () => {
           </div>
 
           <button className="h-12 flex justify-center items-center bg-primaryOrange text-white font-semibold rounded-md w-full py-2">
-            {loading ? (
-              <MoonLoader
-                color={"#ffffff"}
-                loading={loading}
-                size={25}
-                aria-label="Loading Spinner"
-                data-testid="loader"
-              />
+            {isPending ? (
+              <Loading loadingColor="#ffffff" loadingSize={30} />
             ) : (
               "Log in"
             )}
@@ -97,19 +100,25 @@ const Login = () => {
           >
             {" "}
             <CgProfile className="text-2xl text-primaryOrange" />
-            <span>{demoLoading ? "Logging in ..." : "Try a demo account"}</span>
+            <span>
+              {isDemoPending ? "Logging in ..." : "Try a demo account"}
+            </span>
           </button>
 
           {error && (
-            <div className="text-primaryOrange font-semibold text-lg text-center">
-              {error}
-            </div>
+            <Error
+              error={error}
+              errorColor={"text-primaryOrange"}
+              errorSize={"text-lg"}
+            />
           )}
 
           {demoError && (
-            <div className="text-primaryOrange font-semibold text-lg text-center">
-              {demoError}
-            </div>
+            <Error
+              error={demoError}
+              errorColor={"text-primaryOrange"}
+              errorSize={"text-lg"}
+            />
           )}
         </form>
       </div>

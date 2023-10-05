@@ -4,7 +4,7 @@ export const useDeleteMessage = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
 
-  const deleteConversationMessage = async (user1_id, user2_id, message_id) => {
+  const deleteMessage = async (deleteMessageInfo) => {
     setLoading(true);
     setError(null);
 
@@ -15,7 +15,7 @@ export const useDeleteMessage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user1_id, user2_id, message_id }),
+        body: JSON.stringify({ ...deleteMessageInfo }),
       }
     );
 
@@ -32,5 +32,5 @@ export const useDeleteMessage = () => {
     }
   };
 
-  return { deleteConversationMessage, loading, error };
+  return { deleteMessage, loading, error };
 };
