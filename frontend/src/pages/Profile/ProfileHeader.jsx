@@ -1,4 +1,4 @@
-import defaultProfile from "../../images/defaultProfile.png";
+import defaultProfile from "../../assets/images/defaultProfile.png";
 
 const ProfileHeader = ({ userProfile }) => {
   return (

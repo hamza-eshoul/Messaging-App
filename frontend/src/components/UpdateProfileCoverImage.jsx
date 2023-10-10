@@ -1,20 +1,33 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useUpdateUser } from "../hooks/useUpdateUser";
+
+// icons
 import { RxCross1 } from "react-icons/rx";
-import { MoonLoader } from "react-spinners";
-import { useAuthContext } from "../hooks/useAuthContext";
 import { AiOutlinePlus } from "react-icons/ai";
 
-const EditCoverImage = ({ setEditCoverImage, setUserProfile }) => {
-  const [previewSource, setPreviewSource] = useState("");
-  const [isImageUploading, setImageUploading] = useState(false);
+// components
+import Loading from "./Loading";
+import Error from "./Error";
 
-  const { user, dispatch } = useAuthContext();
+const UpdateProfileCoverImage = ({
+  userProfile,
+  setUserProfile,
+  setIsUpdateCoverImage,
+}) => {
+  const [previewSource, setPreviewSource] = useState("");
+  const { updateUser, isPending, error } = useUpdateUser(
+    "http://localhost:4000/user/update_cover_image"
+  );
 
   useEffect(() => {
-    if (user.coverImg) {
-      setPreviewSource(user.coverImg.url);
-    }
-  }, [user]);
+    const initiliazeUserData = () => {
+      if (userProfile.coverImg) {
+        setPreviewSource(userProfile.coverImg.url);
+      }
+    };
+
+    initiliazeUserData();
+  }, []);
 
   //   image
   const inputRef = useRef(null);
@@ -34,27 +47,16 @@ const EditCoverImage = ({ setEditCoverImage, setUserProfile }) => {
   };
 
   const uploadImage = async (imageUrl) => {
-    setImageUploading(true);
+    const user_id = userProfile._id;
 
-    const user_id = user._id;
-    const response = await fetch(
-      "http://localhost:4000/user/update_cover_image",
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user_id, imageUrl }),
-      }
-    );
+    const updated_user = await updateUser({
+      user_id,
+      imageUrl,
+    });
 
-    const json = await response.json();
-
-    if (response.ok) {
-      setImageUploading(null);
-      setUserProfile(json);
-      dispatch({ type: "update_user", payload: json });
-      setEditCoverImage(null);
+    if (!error) {
+      setUserProfile(updated_user);
+      setIsUpdateCoverImage(false);
     }
   };
 
@@ -69,7 +71,7 @@ const EditCoverImage = ({ setEditCoverImage, setUserProfile }) => {
         <div
           className=" p-2 flex justify-center items-center cursor-pointer"
           onClick={() => {
-            setEditCoverImage(false);
+            setIsUpdateCoverImage(false);
           }}
         >
           <RxCross1 className="text-zinc-600 text-xl " />
@@ -128,21 +130,13 @@ const EditCoverImage = ({ setEditCoverImage, setUserProfile }) => {
             uploadImage(previewSource);
           }}
         >
-          {isImageUploading ? (
-            <MoonLoader
-              color={"white"}
-              loading={isImageUploading}
-              size={20}
-              aria-label="Loading Spinner"
-              data-testid="loader"
-            />
-          ) : (
-            <span> Save Changes </span>
-          )}
+          {isPending && <Loading loadingColor={"white"} loadingSize={20} />}
+          {error && <Error error={error} />}
+          {!isPending && !error && <span> Save Changes </span>}
         </button>{" "}
       </footer>
     </div>
   );
 };
 
-export default EditCoverImage;
+export default UpdateProfileCoverImage;

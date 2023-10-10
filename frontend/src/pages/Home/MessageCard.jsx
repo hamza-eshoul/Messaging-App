@@ -7,36 +7,25 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { BsCheck2All } from "react-icons/bs";
 
 // images
-import defaultProfile from "../../images/defaultProfile.png";
+import defaultProfile from "../../assets/images/defaultProfile.png";
+
+// components
 import DeleteMessage from "./DeleteMessage";
 
 const MessageCard = ({
+  isLoggedInUser,
   message,
   selectedUserConversation,
   setMessagesList,
-  triggerFetchConversation,
-  setTriggerFetchConversation,
-  triggerScrollEffect,
-  setTriggerScrollEffect,
+  setConversations,
 }) => {
-  const [isLoggedInUser, setIsLoggedInUser] = useState(false);
   const [formattedDate, setFormattedDate] = useState(null);
-  const [editMessage, setEditMessage] = useState(null);
-  const [deleteMessage, setDeleteMessage] = useState(null);
+  const [isHoverDeleteMessage, setIsHoverDeleteMessage] = useState(false);
+  const [isDeleteMessage, setIsDeleteMessage] = useState(false);
   const { user } = useAuthContext();
-
-  const checkIsUser = () => {
-    if (message.author_id === user._id) {
-      setIsLoggedInUser(true);
-    }
-  };
 
   useEffect(() => {
     setFormattedDate(formatMessageDate(message.createdAt));
-
-    checkIsUser();
-
-    setTriggerScrollEffect(!triggerScrollEffect);
   }, []);
 
   if (isLoggedInUser) {
@@ -51,36 +40,35 @@ const MessageCard = ({
           </div>
           {/* card message */}
           <div
-            onMouseOver={() => setEditMessage(true)}
+            onMouseOver={() => setIsHoverDeleteMessage(true)}
             onMouseLeave={() => {
-              setEditMessage(null);
-              setDeleteMessage(null);
+              setIsHoverDeleteMessage(false);
+              setIsDeleteMessage(false);
             }}
             className="bg-primaryOrange text-white max-w-[500px] rounded-b-lg rounded-tr-lg shadow-md text-sm p-3 flex justify-between gap-1"
           >
             <div className="text-justify">{message.content} </div>
-            {editMessage && (
+            {isHoverDeleteMessage && (
               <div className="relative">
                 <MdKeyboardArrowDown
                   className="text-white text-xl place-self-start cursor-pointer"
-                  onClick={() => setDeleteMessage(!deleteMessage)}
+                  onClick={() => setIsDeleteMessage(!isDeleteMessage)}
                 />
 
-                {deleteMessage && (
+                {isDeleteMessage && (
                   <DeleteMessage
                     user={user}
+                    setConversations={setConversations}
                     selectedUserConversation={selectedUserConversation}
                     message={message}
-                    setDeleteMessage={setDeleteMessage}
+                    setIsDeleteMessage={setIsDeleteMessage}
                     setMessagesList={setMessagesList}
-                    triggerFetchConversation={triggerFetchConversation}
-                    setTriggerFetchConversation={setTriggerFetchConversation}
                   />
                 )}
               </div>
             )}
 
-            {!editMessage && (
+            {!isHoverDeleteMessage && (
               <BsCheck2All className="text-white place-self-end relative" />
             )}
           </div>

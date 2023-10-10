@@ -1,12 +1,22 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useUpdateUser } from "../hooks/useUpdateUser";
+
+// icons
 import { RxCross1 } from "react-icons/rx";
 import { MdMode } from "react-icons/md";
-import { MoonLoader } from "react-spinners";
-import { useAuthContext } from "../hooks/useAuthContext";
 
-const EditProfileInfo = ({ setEditProfileInfo, setUserProfile }) => {
-  const [isLoading, setIsLoading] = useState(null);
-  const [error, setError] = useState(null);
+// components
+import Loading from "./Loading";
+import Error from "./Error";
+
+const UpdateProfileData = ({
+  userProfile,
+  setUserProfile,
+  setIsUpdateProfileData,
+}) => {
+  const [isUpdatePersonalData, setIsUpdatePersonalData] = useState(false);
+  const [isUpdateIntroData, setIsUpdateIntroData] = useState(false);
+  // profile data state
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -14,68 +24,56 @@ const EditProfileInfo = ({ setEditProfileInfo, setUserProfile }) => {
   const [employer, setEmployer] = useState("");
   const [location, setLocation] = useState("");
   const [skills, setSkills] = useState(["", "", ""]);
-  const [editPersonelInformation, setEditPersonalInformation] = useState(false);
-  const [editIntroInfo, setEditIntroInfo] = useState(false);
-  const { user, dispatch } = useAuthContext();
+
+  const { updateUser, isPending, error } = useUpdateUser(
+    "http://localhost:4000/user/user_data"
+  );
 
   useEffect(() => {
-    setFirstName(user.firstName);
-    setLastName(user.lastName);
-    setEmail(user.email);
+    const initializeUserData = () => {
+      setFirstName(userProfile.firstName);
+      setLastName(userProfile.lastName);
+      setEmail(userProfile.email);
 
-    if (user.profession) {
-      setProfession(user.profession);
-    }
+      if (userProfile.profession) {
+        setProfession(userProfile.profession);
+      }
 
-    if (user.employer) {
-      setEmployer(user.employer);
-    }
+      if (userProfile.employer) {
+        setEmployer(userProfile.employer);
+      }
 
-    if (user.location) {
-      setLocation(user.location);
-    }
+      if (userProfile.location) {
+        setLocation(userProfile.location);
+      }
 
-    if (user.skills.length !== 0) {
-      setSkills(user.skills);
-    }
+      if (userProfile.skills.length !== 0) {
+        setSkills(userProfile.skills);
+      }
+    };
+
+    initializeUserData();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError(null);
 
-    const user_id = user._id;
+    const user_id = userProfile._id;
 
-    const response = await fetch("http://localhost:4000/user/user_info", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user_id,
-        firstName,
-        lastName,
-        email,
-        profession,
-        employer,
-        location,
-        skills,
-      }),
+    const updated_user = await updateUser({
+      user_id,
+      firstName,
+      lastName,
+      email,
+      profession,
+      employer,
+      location,
+      skills,
     });
 
-    const json = await response.json();
-
-    if (response.ok) {
-      setIsLoading(false);
-      setEditProfileInfo(null);
-      dispatch({ type: "update_user", payload: json });
-      setUserProfile(json);
-    }
-
-    if (!response.ok) {
-      setIsLoading(false);
-      setError(json.error);
+    if (!error) {
+      setUserProfile(updated_user);
+      setIsUpdateProfileData(false);
     }
   };
 
@@ -90,7 +88,7 @@ const EditProfileInfo = ({ setEditProfileInfo, setUserProfile }) => {
         <div
           className="bg-zinc-100 hover:bg-zinc-200 rounded-full p-2 flex justify-center items-center cursor-pointer"
           onClick={() => {
-            setEditProfileInfo(null);
+            setIsUpdateProfileData(false);
           }}
         >
           <RxCross1 className="text-zinc-600 text-xl" />
@@ -107,12 +105,12 @@ const EditProfileInfo = ({ setEditProfileInfo, setUserProfile }) => {
           <MdMode
             className="text-xl cursor-pointer hover:text-primaryOrange "
             onClick={() => {
-              setEditPersonalInformation(!editPersonelInformation);
+              setIsUpdatePersonalData(!isUpdatePersonalData);
             }}
           />
         </div>
 
-        {editPersonelInformation ? (
+        {isUpdatePersonalData && (
           <div className="flex flex-col gap-3 w-full">
             <div className="flex flex-col gap-3">
               <label className="text-lg text-slate-800 ">First name</label>
@@ -144,7 +142,9 @@ const EditProfileInfo = ({ setEditProfileInfo, setUserProfile }) => {
               />
             </div>
           </div>
-        ) : (
+        )}
+
+        {!isUpdatePersonalData && (
           <ul className="flex flex-col gap-3">
             <li className="font-medium">
               {firstName} {lastName}
@@ -164,12 +164,12 @@ const EditProfileInfo = ({ setEditProfileInfo, setUserProfile }) => {
           <MdMode
             className="text-xl cursor-pointer hover:text-primaryOrange"
             onClick={() => {
-              setEditIntroInfo(!editIntroInfo);
+              setIsUpdateIntroData(!isUpdateIntroData);
             }}
           />
         </div>
 
-        {editIntroInfo ? (
+        {isUpdateIntroData && (
           <div className="flex flex-col gap-3 w-full">
             <div className="flex flex-col gap-3">
               <label className="text-lg text-slate-800 ">Profession</label>
@@ -256,7 +256,9 @@ const EditProfileInfo = ({ setEditProfileInfo, setUserProfile }) => {
               />
             </div>
           </div>
-        ) : (
+        )}
+
+        {!isUpdateIntroData && (
           <ul className="flex flex-col gap-3">
             <li className="font-medium">{profession}</li>
             <li className="font-medium">{employer}</li>
@@ -269,18 +271,10 @@ const EditProfileInfo = ({ setEditProfileInfo, setUserProfile }) => {
           </ul>
         )}
       </section>
-      {/* Post Button */}{" "}
-      {isLoading ? (
-        <div className="flex justify-center items-center">
-          <MoonLoader
-            color={"#fa4d12"}
-            loading={isLoading}
-            size={40}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-          />
-        </div>
-      ) : (
+      {/* Post Button */}
+      {isPending && <Loading loadingColor={"#fa4d12"} loadingSize={45} />}
+      {error && <Error error={error} />}
+      {!isPending && !error && (
         <div className="flex justify-center items-center">
           <button className="h-12 flex justify-center items-center bg-primaryOrange text-white font-semibold rounded-md  py-2 w-1/2">
             {" "}
@@ -288,13 +282,8 @@ const EditProfileInfo = ({ setEditProfileInfo, setUserProfile }) => {
           </button>
         </div>
       )}
-      {error && (
-        <div className="text-red-500 font-semibold text-xl text-center">
-          {error}
-        </div>
-      )}
     </form>
   );
 };
 
-export default EditProfileInfo;
+export default UpdateProfileData;

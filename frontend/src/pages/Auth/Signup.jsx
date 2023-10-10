@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSignup } from "../hooks/useSignup";
+import { useSignup } from "../../hooks/useSignup";
 
 // images
-import dashboard from "../images/dashboard-messaging.png";
-import logo from "../images/logo.png";
+import dashboard from "../../assets/images/dashboard-messaging.png";
+import logo from "../../assets/images/logo.png";
 
 // components
-import Loading from "../components/Loading";
-import Error from "../components/Error";
+import Loading from "../../components/Loading";
+import Error from "../../components/Error";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("");

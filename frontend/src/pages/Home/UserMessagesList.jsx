@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
 
 // icons
@@ -10,34 +9,11 @@ import Loading from "../../components/Loading";
 import Error from "../../components/Error";
 
 const UserMessagesList = ({
+  conversations,
   selectedUserConversation,
   setSelectedUserConversation,
-  usersList,
-  setUsersList,
-  triggerFetchConversation,
 }) => {
-  const [conversations, setConversations] = useState();
   const { users, isPending, error } = useFetchUsers();
-
-  useEffect(() => {
-    const fetchAllConversations = async () => {
-      const response = await fetch("http://localhost:4000/conversation");
-
-      const json = await response.json();
-
-      if (response.ok) {
-        setConversations(json);
-      }
-    };
-
-    fetchAllConversations();
-  }, [triggerFetchConversation]);
-
-  useEffect(() => {
-    if (users) {
-      setUsersList(users);
-    }
-  }, [users]);
 
   return (
     <section className="border-r-[1px] border-zinc-300 w-[25%] h-full">
@@ -61,18 +37,18 @@ const UserMessagesList = ({
             error={error}
             errorColor={"text-primaryOrange"}
             errorSize={"text-lg"}
+            errorHeight={"h-screen"}
           />
         )}
-        {usersList &&
-          usersList.map((user) => (
+        {users &&
+          conversations &&
+          users.map((user) => (
             <MessageCardPreview
-              conversations={conversations}
               key={user._id}
               user={user}
               selectedUserConversation={selectedUserConversation}
               setSelectedUserConversation={setSelectedUserConversation}
-              usersList={usersList}
-              setUsersList={setUsersList}
+              conversations={conversations}
             />
           ))}{" "}
       </div>

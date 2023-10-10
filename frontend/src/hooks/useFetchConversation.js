@@ -9,10 +9,10 @@ export const useFetchConversation = (selectedUserConversation) => {
   const { user } = useAuthContext();
 
   const fetchConversation = async () => {
+    setIsPending(true);
     setIsConversationEmpty(false);
     setConversation(null);
     setError(null);
-    setIsPending(true);
 
     const conversation_info = {
       user1_id: user._id,
@@ -35,9 +35,9 @@ export const useFetchConversation = (selectedUserConversation) => {
     }
 
     if (json && json.messages && json.messages.length !== 0) {
-      setIsPending(false);
-      setIsConversationEmpty(false);
       setConversation(json);
+      setIsConversationEmpty(false);
+      setIsPending(false);
     } else {
       setIsPending(false);
       setIsConversationEmpty(true);

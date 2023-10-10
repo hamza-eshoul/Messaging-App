@@ -6,7 +6,7 @@ import Loading from "../../components/Loading";
 import ProfileCard from "./ProfileCard";
 
 // images
-import defaultProfile from "../../images/defaultProfile.png";
+import defaultProfile from "../../assets/images/defaultProfile.png";
 
 const SimilarProfiles = () => {
   const { users, isPending, error } = useFetchUsers(true);

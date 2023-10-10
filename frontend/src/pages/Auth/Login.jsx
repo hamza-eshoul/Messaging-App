@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogin } from "../hooks/useLogin";
+import { useLogin } from "../../hooks/useLogin";
 
 // images
-import logo from "../images/logo.png";
-import dashboard from "../images/dashboard-messaging.png";
+import logo from "../../assets/images/logo.png";
+import dashboard from "../../assets/images/dashboard-messaging.png";
 
 // icons
 import { CgProfile } from "react-icons/cg";
 
 // components
-import Loading from "../components/Loading";
-import Error from "../components/Error";
+import Loading from "../../components/Loading";
+import Error from "../../components/Error";
 
 const Login = () => {
   const [email, setEmail] = useState("");

@@ -3,11 +3,10 @@ import { useDeleteMessage } from "../../hooks/useDeleteMessage";
 const DeleteMessage = ({
   user,
   selectedUserConversation,
-  setDeleteMessage,
+  setIsDeleteMessage,
   message,
   setMessagesList,
-  triggerFetchConversation,
-  setTriggerFetchConversation,
+  setConversations,
 }) => {
   const { deleteMessage, loading, error } = useDeleteMessage();
 
@@ -18,21 +17,30 @@ const DeleteMessage = ({
       message_id: message._id,
     };
 
-    const updatedMessages = await deleteMessage(deleteMessageInfo);
+    const updatedConversation = await deleteMessage(deleteMessageInfo);
 
-    updateMessagesList(updatedMessages);
+    updateMessagesListAndConversationList(updatedConversation);
   };
 
-  const updateMessagesList = (messages) => {
-    setMessagesList(messages.messages);
-    setTriggerFetchConversation(!triggerFetchConversation);
+  const updateMessagesListAndConversationList = (updatedConversation) => {
+    setMessagesList(updatedConversation.messages);
+
+    setConversations((prevConversations) => {
+      return prevConversations.map((conversation) => {
+        if (conversation._id == updatedConversation._id) {
+          return updatedConversation;
+        } else {
+          return conversation;
+        }
+      });
+    });
   };
 
   return (
     <div
       className="bg-white hover:bg-zinc-100 text-primaryDark cursor-pointer p-3 m-2 w-48 absolute right-1 top-2.5 shadow-md rounded"
       onClick={() => {
-        setDeleteMessage(null);
+        setIsDeleteMessage(null);
         handleDeleteMessage();
       }}
     >

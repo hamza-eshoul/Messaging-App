@@ -1,19 +1,22 @@
 import { useState } from "react";
+
+// icons
 import { FaUserEdit } from "react-icons/fa";
 
 // components
 import Overlay from "../../components/Overlay";
-import EditAboutMe from "../../components/EditAboutMe";
+import UpdateAboutMe from "../../components/UpdateAboutMe";
 
-const ProfileAboutMe = ({ userProfile, isLoggedInUser }) => {
-  const [editAboutMe, setEditAboutMe] = useState(null);
+const ProfileAboutMe = ({ userProfile, setUserProfile, isLoggedInUser }) => {
+  const [isUpdateAboutMe, setIsUpdateAboutMe] = useState(false);
   return (
     <>
-      {editAboutMe && (
+      {isUpdateAboutMe && (
         <>
           <Overlay />
-          <EditAboutMe
-            setEditAboutMe={setEditAboutMe}
+          <UpdateAboutMe
+            setIsUpdateAboutMe={setIsUpdateAboutMe}
+            userProfile={userProfile}
             setUserProfile={setUserProfile}
           />
         </>
@@ -25,7 +28,7 @@ const ProfileAboutMe = ({ userProfile, isLoggedInUser }) => {
           {isLoggedInUser && (
             <FaUserEdit
               className="text-3xl cursor-pointer hover:opacity-50"
-              onClick={() => setEditAboutMe(!editAboutMe)}
+              onClick={() => setIsUpdateAboutMe(!isUpdateAboutMe)}
             />
           )}
         </div>

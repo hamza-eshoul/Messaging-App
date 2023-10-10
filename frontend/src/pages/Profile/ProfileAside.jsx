@@ -10,6 +10,24 @@ import {
 import SimilarProfiles from "./SimilarProfiles";
 import ProfileCard from "./ProfileCard";
 
+const profile_connect_links = [
+  {
+    icon: <AiFillFacebook className="text-zinc-600 text-xl" />,
+    url: "https://www.facebook.com/www.facebook.com",
+    name: "Facebook",
+  },
+  {
+    icon: <AiFillInstagram className="text-zinc-600 text-xl" />,
+    url: "https://www.instagram.com/",
+    name: "Instagram",
+  },
+  {
+    icon: <AiFillTwitterCircle className="text-zinc-600 text-xl" />,
+    url: "https://twitter.com/",
+    name: "Twitter",
+  },
+];
+
 const ProfileAside = ({ userProfile }) => {
   return (
     <section className="w-[20%] flex flex-col gap-6 h-full overflow-auto">
@@ -27,36 +45,18 @@ const ProfileAside = ({ userProfile }) => {
       </ProfileCard>
 
       <ProfileCard cardTitle="Connect">
-        <div className="flex gap-2 pl-1 items-center text-sm">
-          <AiFillFacebook className="text-zinc-600 text-xl" />
-          <a
-            href="https://www.facebook.com/www.facebook.com"
-            className="text-zinc-700 font-medium cursor-pointer hover:underline hover:underline-offset-2"
-            target="_blank"
-          >
-            Facebook
-          </a>
-        </div>
-        <div className="flex gap-2 pl-1 items-center text-sm">
-          <AiFillInstagram className="text-zinc-600 text-xl" />
-          <a
-            href="https://www.instagram.com/"
-            className="text-zinc-700 font-medium cursor-pointer hover:underline  hover:underline-offset-2"
-            target="_blank"
-          >
-            Instagram
-          </a>
-        </div>
-        <div className="flex gap-2 pl-1 items-center text-sm">
-          <AiFillTwitterCircle className="text-zinc-600 text-xl" />
-          <a
-            href="https://twitter.com/"
-            className="text-zinc-700 font-medium cursor-pointer hover:underline hover:underline-offset-2"
-            target="_blank"
-          >
-            Twitter
-          </a>
-        </div>
+        {profile_connect_links.map((link) => (
+          <div className="flex gap-2 l-1 items-center text-sm">
+            {link.icon}
+            <a
+              href={link.url}
+              target="_blank"
+              className="text-zinc-700 font-medium cursor-pointer hover:underline-offset-2"
+            >
+              {link.name}
+            </a>
+          </div>
+        ))}
       </ProfileCard>
 
       <SimilarProfiles />

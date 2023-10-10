@@ -30,14 +30,8 @@ const SidebarIcons = ({ user, toggleToastNotification }) => {
           >
             <RiUser6Line />
           </NavLink>
-          <NavLink
-            to={"/profile/64e5f514be01e5666f6e75de"}
-            className={({ isActive }) =>
-              isActive ? "activeSidebarIcons " : "sidebarIcon"
-            }
-          >
-            <FiStar />
-          </NavLink>
+
+          <FiStar onClick={toggleToastNotification} className="sidebarIcon" />
 
           <BsCursor onClick={toggleToastNotification} className="sidebarIcon" />
 

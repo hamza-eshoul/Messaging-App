@@ -162,8 +162,8 @@ exports.get_user = async (req, res) => {
   }
 };
 
-// update user info
-exports.update_user_info = async (req, res) => {
+// update user data
+exports.update_user_data = async (req, res) => {
   const {
     user_id,
     firstName,
@@ -176,7 +176,7 @@ exports.update_user_info = async (req, res) => {
   } = req.body;
 
   try {
-    // find user and update his info
+    // find user and update his data
     const updateUserInfo = await User.findByIdAndUpdate(
       user_id,
       {
@@ -200,7 +200,7 @@ exports.update_user_info = async (req, res) => {
 };
 
 exports.update_user_about = async (req, res) => {
-  const { user_id, aboutMe } = req.body;
+  const { user_id, aboutText } = req.body;
 
   try {
     // find user and update his info
@@ -208,7 +208,7 @@ exports.update_user_about = async (req, res) => {
       user_id,
       {
         $set: {
-          aboutUser: aboutMe,
+          aboutUser: aboutText,
         },
       },
       { new: true }
@@ -220,7 +220,7 @@ exports.update_user_about = async (req, res) => {
   }
 };
 
-exports.update_user_image = async (req, res) => {
+exports.update_user_profile_image = async (req, res) => {
   const { user_id, imageUrl } = req.body;
 
   try {

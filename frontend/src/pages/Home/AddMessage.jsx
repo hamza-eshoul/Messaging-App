@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAddMessage } from "../../hooks/useAddMessage";
+import { socket } from "../../socket";
 
 // icons
 import { RiSendPlane2Line } from "react-icons/ri";
@@ -10,11 +11,9 @@ import EmojiPicker from "emoji-picker-react";
 
 const AddMessage = ({
   user,
-  socket,
+  setConversations,
   selectedUserConversation,
   setMessagesList,
-  triggerFetchConversation,
-  setTriggerFetchConversation,
 }) => {
   const [messageContent, setMessageContent] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(null);
@@ -35,16 +34,19 @@ const AddMessage = ({
 
     resetAddMessage();
 
-    updateMessagesList(updatedConversation);
+    updateMessagesAndConversationsList(updatedConversation);
   };
 
   const handleSocketAddMessage = (conversation, selectedUserConversation) => {
     const addedMessage =
       conversation.messages[conversation.messages.length - 1];
 
+    const receiver = selectedUserConversation;
+
     socket.emit("sendMessage", {
-      ...addedMessage,
-      receiverId: selectedUserConversation._id,
+      addedMessage,
+      receiver,
+      conversation,
     });
   };
 
@@ -53,9 +55,18 @@ const AddMessage = ({
     setShowEmojiPicker(null);
   };
 
-  const updateMessagesList = (conversation) => {
-    setMessagesList(conversation.messages);
-    setTriggerFetchConversation(!triggerFetchConversation);
+  const updateMessagesAndConversationsList = (updatedConversation) => {
+    setMessagesList(updatedConversation.messages);
+
+    setConversations((prevConversations) => {
+      return prevConversations.map((conversation) => {
+        if (conversation._id == updatedConversation._id) {
+          return updatedConversation;
+        } else {
+          return conversation;
+        }
+      });
+    });
   };
 
   return (

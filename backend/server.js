@@ -23,8 +23,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use("/user", userRoutes);
 app.use("/conversation", conversationRoutes);
 
-// socketio logic
-
+// socket.io logic
 let users = [];
 
 const addUser = (userId, socketId) => {
@@ -48,20 +47,17 @@ io.on("connection", (socket) => {
     io.emit("getUsers", users);
   });
 
-  // send a get message
-  socket.on("sendMessage", (addedMessage) => {
-    const receiver_id = addedMessage.receiverId;
+  // send and get message
+  socket.on("sendMessage", ({ addedMessage, receiver, conversation }) => {
+    const receiverId = receiver._id;
+    const user = getUser(receiverId);
 
-    const user = getUser(receiver_id);
-
-    if (user) {
-      io.to(user.socketId).emit("getMessage", addedMessage);
-    }
+    io.to(user.socketId).emit("getMessage", { addedMessage, conversation });
   });
 
-  // when disconnect
+  // disconnection
   socket.on("disconnect", () => {
-    console.log(" a user disconnected");
+    console.log("a user disconnected");
     removeUser(socket.id);
     io.emit("getUsers", users);
   });

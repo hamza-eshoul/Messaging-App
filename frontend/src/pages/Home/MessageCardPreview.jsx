@@ -3,7 +3,7 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 import { formatDistance } from "date-fns";
 
 // images
-import defaultProfile from "../../images/defaultProfile.png";
+import defaultProfile from "../../assets/images/defaultProfile.png";
 
 // icons
 import { BsCheck2All } from "react-icons/bs";
@@ -14,22 +14,16 @@ const MessageCardPreview = ({
   setSelectedUserConversation,
   conversations,
 }) => {
-  const [selectedConversation, setSelectedConversation] = useState(null);
+  const [isUserSelected, setIsUserSelected] = useState(false);
   const [previewMessage, setPreviewMessage] = useState(null);
   const [previewMessageTime, setPreviewMessageTime] = useState(null);
-
   const { user: loggedUser } = useAuthContext();
 
-  useEffect(() => {
-    if (selectedUserConversation) {
-      if (user._id === selectedUserConversation._id) {
-        setSelectedConversation(true);
-      } else {
-        setSelectedConversation(null);
-      }
-    }
-  }, [selectedUserConversation]);
-
+  const populateEmptyConversation = () => {
+    const userFullName = user.firstName + " " + user.lastName;
+    setPreviewMessage(`Chat with  ${userFullName} ...`);
+  };
+  
   const populateUserConversation = (conversation) => {
     if (conversation.messages.length !== 0) {
       let lastMessage =
@@ -51,37 +45,46 @@ const MessageCardPreview = ({
 
       setPreviewMessage(lastMessage);
       setPreviewMessageTime(formattedMessageTime);
-    } else {
-      populateEmptyConversation();
     }
   };
 
-  const populateEmptyConversation = () => {
-    const userName = user.firstName + " " + user.lastName;
-    setPreviewMessage(`Chat with  ${userName} ...`);
+  const checkAndPopulateConversationMatch = () => {
+    conversations.map((conversation) => {
+      if (
+        (conversation.user1_id == user._id &&
+          conversation.user2_id == loggedUser._id) ||
+        (conversation.user1_id == loggedUser._id &&
+          conversation.user2_id == user._id)
+      ) {
+        populateUserConversation(conversation);
+      }
+    });
   };
 
   useEffect(() => {
     populateEmptyConversation();
 
-    if (conversations) {
-      conversations.map((conversation) => {
-        if (
-          (conversation.user1_id == user._id &&
-            conversation.user2_id == loggedUser._id) ||
-          (conversation.user1_id == loggedUser._id &&
-            conversation.user2_id == user._id)
-        ) {
-          populateUserConversation(conversation);
-        }
-      });
-    }
+    checkAndPopulateConversationMatch();
   }, [conversations]);
+
+  useEffect(() => {
+    const updateSelectedConversation = () => {
+      if (user._id === selectedUserConversation._id) {
+        setIsUserSelected(true);
+      } else {
+        setIsUserSelected(false);
+      }
+    };
+
+    if (selectedUserConversation) {
+      updateSelectedConversation();
+    }
+  }, [selectedUserConversation]);
 
   return (
     <div
       className={`${
-        selectedConversation
+        isUserSelected
           ? "bg-lightOrange border-l-[2.5px] border-l-secondaryOrange "
           : "border-b-[1px] border-zinc-300"
       } flex gap-3 items-center py-[21.6px] px-4 cursor-pointer `}
@@ -104,7 +107,7 @@ const MessageCardPreview = ({
         <div className="flex items-center justify-between">
           <span
             className={`${
-              selectedConversation ? "text-primaryOrange" : ""
+              isUserSelected ? "text-primaryOrange" : ""
             } font-medium`}
           >
             {user.firstName} {user.lastName}
@@ -119,9 +122,7 @@ const MessageCardPreview = ({
         <div className="flex items-center justify-between gap-2">
           <p
             className={`${
-              selectedConversation
-                ? "text-primaryDark font-medium"
-                : "text-zinc-500"
+              isUserSelected ? "text-primaryDark font-medium" : "text-zinc-500"
             } text-sm`}
           >
             {previewMessage && <span>{previewMessage}</span>}

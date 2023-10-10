@@ -38,5 +38,5 @@ export const useFetchProfile = (profile_id) => {
     }
   }, [profile_id]);
 
-  return { userProfile, isLoggedInUser, isPending, error };
+  return { userProfile, setUserProfile, isLoggedInUser, isPending, error };
 };

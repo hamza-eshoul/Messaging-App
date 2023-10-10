@@ -1,11 +1,11 @@
 import { useState } from "react";
-
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 // images
-import logo from "../images/logo.png";
-import defaultProfile from "../images/defaultProfile.png";
+import logo from "../assets/images/logo.png";
+import defaultProfile from "../assets/images/defaultProfile.png";
 
 // icons
 import { IoMdLogOut } from "react-icons/io";
@@ -18,6 +18,7 @@ const Sidebar = () => {
   const [toastNotification, setToastNotification] = useState(null);
   const { user } = useAuthContext();
   const { logout } = useLogout();
+  const navigate = useNavigate();
 
   const toggleToastNotification = () => {
     setToastNotification(true);
@@ -26,6 +27,10 @@ const Sidebar = () => {
       setToastNotification(null);
     }, 5000);
   };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <aside className="flex flex-col justify-between min-h-screen w-24 bg-primaryDark">
@@ -65,7 +70,10 @@ const Sidebar = () => {
         <div className=" space-y-6 flex flex-col justify-center items-center pb-5 ">
           <div className=" bg-zinc-600 w-12 h-[1.5px] " />
           {user && (
-            <div className="h-12 w-12">
+            <div
+              className="h-12 w-12 cursor-pointer"
+              onClick={() => navigate("/profile/64e5f514be01e5666f6e75de")}
+            >
               <img
                 src={user.profileImg.url ? user.profileImg.url : defaultProfile}
                 alt="user image"

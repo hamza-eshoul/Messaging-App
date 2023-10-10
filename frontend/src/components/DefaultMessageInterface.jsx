@@ -1,10 +1,10 @@
-import logo from "../images/logo.png";
+import logo from "../assets/images/logo.png";
 
 const DefaultMessageInterface = () => {
   return (
-    <section className="flex justify-center pt-96 w-[calc(75%-96px)] bg-primaryGray z-[-2]">
+    <section className="flex justify-center w-[calc(75%-96px)] h-screen items-center bg-primaryGray z-[-2]">
       {" "}
-      <div className="custom-border glow flex flex-col items-center justify-center gap-5 p-10">
+      <div className="border-[2px] w-[40%] h-[30%] border-primaryOrange flex flex-col items-center p-6 justify-center gap-5 bg-white shadow-xl">
         <div>
           <img src={logo} />
         </div>
