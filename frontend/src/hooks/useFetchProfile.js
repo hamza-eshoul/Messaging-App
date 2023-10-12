@@ -13,7 +13,11 @@ export const useFetchProfile = (profile_id) => {
     setIsLoggedInUser(false);
     setError(null);
 
-    const response = await fetch(`http://localhost:4000/user/${profile_id}`);
+    const response = await fetch(`http://localhost:4000/user/${profile_id}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
 
     const json = await response.json();
 
@@ -33,10 +37,10 @@ export const useFetchProfile = (profile_id) => {
   };
 
   useEffect(() => {
-    if (profile_id) {
+    if (user) {
       fetchProfile(profile_id);
     }
-  }, [profile_id]);
+  }, [user]);
 
-  return { userProfile, setUserProfile, isLoggedInUser, isPending, error };
+  return { userProfile, isLoggedInUser, isPending, error, setUserProfile };
 };

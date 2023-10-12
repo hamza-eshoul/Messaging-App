@@ -83,7 +83,11 @@ const MessageCard = ({
         {/* image */}
         <div className="h-10 w-10">
           <img
-            src={message.authorImg ? message.authorImg : defaultProfile}
+            src={
+              selectedUserConversation.profileImg.url
+                ? selectedUserConversation.profileImg.url
+                : defaultProfile
+            }
             alt="user messager"
             className="w-full h-full rounded-full"
           />

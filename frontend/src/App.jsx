@@ -11,7 +11,7 @@ import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 
 const App = () => {
-  const { user } = useAuthContext();
+  const { user, authIsReady } = useAuthContext();
   const [receivedMessage, setReceivedMessage] = useState(null);
   const [updatedReceivedConversation, setUpdatedReceivedConversation] =
     useState(null);
@@ -50,42 +50,44 @@ const App = () => {
   return (
     <>
       <div className="h-screen flex rounded-lg">
-        <BrowserRouter>
-          <Sidebar />
-          <Routes>
-            <Route
-              path="/"
-              element={
-                user ? <Navigate to="/homepage/" /> : <Navigate to="/login" />
-              }
-            />
-            <Route
-              path="/homepage"
-              element={
-                user ? (
-                  <Homepage
-                    receivedMessage={receivedMessage}
-                    updatedReceivedConversation={updatedReceivedConversation}
-                  />
-                ) : (
-                  <Navigate to="/login" />
-                )
-              }
-            />
-            <Route
-              path="/profile/:id"
-              element={user ? <Profile /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/login"
-              element={!user ? <Login /> : <Navigate to="/homepage" />}
-            />
-            <Route
-              path="/signup"
-              element={!user ? <Signup /> : <Navigate to="/homepage" />}
-            />
-          </Routes>
-        </BrowserRouter>
+        {authIsReady && (
+          <BrowserRouter>
+            <Sidebar />
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  user ? <Navigate to="/homepage" /> : <Navigate to="/login" />
+                }
+              />
+              <Route
+                path="/homepage"
+                element={
+                  user ? (
+                    <Homepage
+                      receivedMessage={receivedMessage}
+                      updatedReceivedConversation={updatedReceivedConversation}
+                    />
+                  ) : (
+                    <Navigate to="/login" />
+                  )
+                }
+              />
+              <Route
+                path="/profile/:id"
+                element={user ? <Profile /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/login"
+                element={!user ? <Login /> : <Navigate to="/homepage" />}
+              />
+              <Route
+                path="/signup"
+                element={!user ? <Signup /> : <Navigate to="/homepage" />}
+              />
+            </Routes>
+          </BrowserRouter>
+        )}
       </div>
     </>
   );

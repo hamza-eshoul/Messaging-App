@@ -26,7 +26,7 @@ const MessagesInterfaceBody = ({
   }, [conversation, isConversationEmpty]);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView();
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messagesList]);
 
   return (
@@ -65,7 +65,6 @@ const MessagesInterfaceBody = ({
               setMessagesList={setMessagesList}
             />
           ))}
-
           <div ref={messagesEndRef} />
         </div>
       )}

@@ -31,8 +31,7 @@ exports.add_message = async (req, res) => {
   const { user1_id, user2_id, author, content, authorImage } = req.body;
 
   try {
-    // Check if conversation exists
-    const exists = await Conversation.findOne({
+    const conversationExists = await Conversation.findOne({
       $or: [
         { user1_id, user2_id },
         { user1_id: user2_id, user2_id: user1_id },
@@ -40,9 +39,9 @@ exports.add_message = async (req, res) => {
     });
 
     // Push message to existing conversation
-    if (exists) {
-      const pushedMessage = await Conversation.findByIdAndUpdate(
-        exists._id,
+    if (conversationExists) {
+      const addedMessage = await Conversation.findByIdAndUpdate(
+        conversationExists._id,
         {
           $push: {
             messages: { author_id: user1_id, author, content, authorImage },
@@ -51,13 +50,14 @@ exports.add_message = async (req, res) => {
         { new: true }
       );
 
-      await pushedMessage.save();
+      await addedMessage.save();
 
-      res.status(200).json(pushedMessage);
+      res.status(200).json(addedMessage);
     }
+
     // Create new conversation with a first message
-    else {
-      const conversation = await new Conversation({
+    if (!conversationExists) {
+      const newConversation = await new Conversation({
         user1_id,
         user2_id,
         messages: [
@@ -70,9 +70,9 @@ exports.add_message = async (req, res) => {
         ],
       });
 
-      await conversation.save();
+      await newConversation.save();
 
-      res.status(200).json(conversation);
+      res.status(200).json(newConversation);
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -90,7 +90,7 @@ exports.delete_message = async (req, res) => {
       ],
     });
 
-    const updateConversationMessages = await Conversation.findByIdAndUpdate(
+    const updatedConversation = await Conversation.findByIdAndUpdate(
       conversation._id,
       {
         $pull: {
@@ -102,7 +102,7 @@ exports.delete_message = async (req, res) => {
       { new: true }
     );
 
-    res.status(200).json(updateConversationMessages);
+    res.status(200).json(updatedConversation);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

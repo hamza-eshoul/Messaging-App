@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
+const requireAuth = require("../middleware/requireAuth");
 
 // sign up
 router.post("/signup", userController.sign_up);
@@ -9,18 +10,24 @@ router.post("/signup", userController.sign_up);
 router.post("/login", userController.log_in);
 
 // get users
-router.get("/", userController.get_users);
+router.get("/", requireAuth, userController.get_users);
 
 // get individual user
-router.get("/:id", userController.get_user);
+router.get("/:id", requireAuth, userController.get_user);
 
-router.put("/user_data", userController.update_user_data);
+// update user data
 
-router.put("/user_about", userController.update_user_about);
+router.put("/user_data", requireAuth, userController.update_user_data);
+
+router.put("/user_about", requireAuth, userController.update_user_about);
 
 // update user image
-router.put("/update_profile_image", userController.update_user_profile_image);
+router.put(
+  "/profile_image",
+  requireAuth,
+  userController.update_user_profile_image
+);
 
-router.put("/update_cover_image", userController.update_user_cover_image);
+router.put("/cover_image", requireAuth, userController.update_user_cover_image);
 
 module.exports = router;

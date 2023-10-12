@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useAuthContext } from "./useAuthContext";
 
 export const useDeleteMessage = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
+  const { user } = useAuthContext();
 
   const deleteMessage = async (deleteMessageInfo) => {
     setLoading(true);
@@ -13,6 +15,7 @@ export const useDeleteMessage = () => {
       {
         method: "DELETE",
         headers: {
+          Authorization: `Bearer ${user.token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ ...deleteMessageInfo }),

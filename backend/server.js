@@ -9,7 +9,7 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/user");
 const conversationRoutes = require("./routes/conversation");
 
-// initialize
+// initialize app and socket.io
 const io = new Server(server, {
   cors: { origin: ["http://localhost:5173"] },
 });
@@ -52,7 +52,9 @@ io.on("connection", (socket) => {
     const receiverId = receiver._id;
     const user = getUser(receiverId);
 
-    io.to(user.socketId).emit("getMessage", { addedMessage, conversation });
+    if (user) {
+      io.to(user.socketId).emit("getMessage", { addedMessage, conversation });
+    }
   });
 
   // disconnection

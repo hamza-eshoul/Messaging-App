@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useFetchUsers } from "../../hooks/useFetchUsers";
 
@@ -9,7 +10,20 @@ import ProfileCard from "./ProfileCard";
 import defaultProfile from "../../assets/images/defaultProfile.png";
 
 const SimilarProfiles = () => {
-  const { users, isPending, error } = useFetchUsers(true);
+  const { users, isPending, error } = useFetchUsers();
+  const [shuffledAndSlicedUsersList, setShuffledAndSlicedUsersList] =
+    useState(null);
+
+  const shuffleAndSliceUsersList = (users) => {
+    return users.sort(() => Math.random() - 0.5).slice(0, 5);
+  };
+
+  useEffect(() => {
+    if (users) {
+      const transformedUsersList = shuffleAndSliceUsersList(users);
+      setShuffledAndSlicedUsersList(transformedUsersList);
+    }
+  }, [users]);
 
   return (
     <ProfileCard cardTitle="Similar profiles">
@@ -20,8 +34,8 @@ const SimilarProfiles = () => {
         </div>
       )}
 
-      {users &&
-        users.map((user) => (
+      {shuffledAndSlicedUsersList &&
+        shuffledAndSlicedUsersList.map((user) => (
           <Link
             to={`/profile/${user._id}`}
             key={user._id}

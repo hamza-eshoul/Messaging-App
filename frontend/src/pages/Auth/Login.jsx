@@ -29,107 +29,107 @@ const Login = () => {
     await login(
       import.meta.env.VITE_DEMO_EMAIL,
       import.meta.env.VITE_DEMO_PASSWORD,
-      true
+      true,
     );
   };
 
   return (
-    <section className="h-screen flex">
+    <section className="flex h-screen w-full">
       {/* Login */}
-      <div className="w-[36%] flex flex-col items-center mt-64 gap-6 h-[calc(100%-288px)]">
-        {/* Logo */}
-
-        <div className="flex items-center gap-3 mb-14 w-[70%]">
-          <div className="h-16 w-16">
-            <img src={logo} alt="logo" className="h-full w-full" />
-          </div>
-          <h1 className="text-2xl font-extrabold"> Odin Messaging App</h1>
-        </div>
-
-        {/* Heading */}
-        <div className="flex flex-col gap-3 w-[70%]">
-          <h2 className="text-5xl font-bold text-[#101828]"> Welcome back</h2>
-          <p className="text-[#475467] text-lg">
-            New to Odin Messaging App?{" "}
-            <Link
-              to="/signup"
-              className="font-bold text-primaryOrange cursor-pointer"
-            >
-              Create an account.{" "}
-            </Link>
-          </p>
-        </div>
-
-        {/* Form */}
-        <form
-          className="text-[#475467] space-y-5 w-[70%]"
-          onSubmit={handleLoginSubmit}
-        >
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-bold">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              className="outline-none border-[1px] rounded-md border-zinc-300 py-1.5 px-2"
-            />
+      <div className="mx-auto flex flex-col justify-center px-4 xl:w-[40%] xl:px-20 2xl:px-[112px] ">
+        <div className="space-y-6 rounded-lg border-[1px] px-6 py-7 sm:p-12 xl:border-[0px] xl:p-0">
+          <div className="mb-14 flex items-center gap-3">
+            <div className="h-16 w-16">
+              <img src={logo} alt="logo" className="h-full w-full" />
+            </div>
+            <h1 className="text-xl font-extrabold sm:text-2xl">
+              {" "}
+              Odin Messaging App
+            </h1>
           </div>
 
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-bold">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="outline-none border-[1px] rounded-md border-zinc-300 py-1.5 px-2"
-            />
+          <div className="flex flex-col gap-3 ">
+            <h2 className="text-3xl font-bold text-[#101828] sm:text-5xl">
+              {" "}
+              Welcome back
+            </h2>
+            <p className="text-justify text-[#475467] sm:text-lg">
+              New to Odin Messaging App?{" "}
+              <Link
+                to="/signup"
+                className="cursor-pointer font-bold text-primaryOrange"
+              >
+                Create an account.{" "}
+              </Link>
+            </p>
           </div>
 
-          <button className="h-12 flex justify-center items-center bg-primaryOrange text-white font-semibold rounded-md w-full py-2">
-            {isPending ? (
-              <Loading loadingColor="#ffffff" loadingSize={30} />
-            ) : (
-              "Log in"
-            )}
-          </button>
-          <button
-            type="button"
-            className="flex justify-center items-center bg-white gap-2 border-[1px] w-full border-primaryOrange font-semibold  rounded-md py-2"
-            onClick={handleDemoAccountLogin}
+          <form
+            className="space-y-5 text-[#475467]"
+            onSubmit={handleLoginSubmit}
           >
-            {" "}
-            <CgProfile className="text-2xl text-primaryOrange" />
-            <span>
-              {isDemoPending ? "Logging in ..." : "Try a demo account"}
-            </span>
-          </button>
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-bold">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className="rounded-md border-[1px] border-zinc-300 px-2 py-1.5 outline-none"
+              />
+            </div>
 
-          {error && (
-            <Error
-              error={error}
-              errorColor={"text-primaryOrange"}
-              errorSize={"text-lg"}
-            />
-          )}
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-bold">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="rounded-md border-[1px] border-zinc-300 px-2 py-1.5 outline-none"
+              />
+            </div>
 
-          {demoError && (
-            <Error
-              error={demoError}
-              errorColor={"text-primaryOrange"}
-              errorSize={"text-lg"}
-            />
-          )}
-        </form>
+            <button className="flex w-full items-center justify-center rounded-md bg-primaryOrange py-2.5 font-semibold text-white">
+              {isPending ? (
+                <Loading loadingColor="#ffffff" loadingSize={30} />
+              ) : (
+                "Log in"
+              )}
+            </button>
+            <button
+              type="button"
+              className="flex w-full items-center justify-center gap-2 rounded-md border-[1px] border-primaryOrange bg-white  py-2.5 font-semibold"
+              onClick={handleDemoAccountLogin}
+            >
+              {" "}
+              <CgProfile className="text-2xl text-primaryOrange" />
+              <span>
+                {isDemoPending ? "Logging in ..." : "Try a demo account"}
+              </span>
+            </button>
+
+            {error && (
+              <Error
+                error={error}
+                errorColor={"text-primaryOrange"}
+                errorSize={"text-lg"}
+              />
+            )}
+
+            {demoError && (
+              <Error
+                error={demoError}
+                errorColor={"text-primaryOrange"}
+                errorSize={"text-base sm:text-lg"}
+              />
+            )}
+          </form>
+        </div>
       </div>
 
       {/* Image */}
-      <div className="w-[64%]">
-        <img
-          src={dashboard}
-          alt="login image"
-          className="h-full w-full object-fit"
-        />
+      <div className="hidden w-[60%] xl:block">
+        <img src={dashboard} alt="login image" className="h-full w-full " />
       </div>
     </section>
   );

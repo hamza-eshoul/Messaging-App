@@ -46,7 +46,7 @@ const ProfileAside = ({ userProfile }) => {
 
       <ProfileCard cardTitle="Connect">
         {profile_connect_links.map((link) => (
-          <div className="flex gap-2 l-1 items-center text-sm">
+          <div key={link.name} className="flex gap-2 l-1 items-center text-sm">
             {link.icon}
             <a
               href={link.url}

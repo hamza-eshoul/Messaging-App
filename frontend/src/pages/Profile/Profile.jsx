@@ -10,7 +10,7 @@ import ProfileAside from "./ProfileAside";
 
 const Profile = () => {
   const { id } = useParams();
-  const { userProfile, setUserProfile, isLoggedInUser, isPending, error } =
+  const { userProfile, isLoggedInUser, isPending, error, setUserProfile } =
     useFetchProfile(id);
 
   if (isPending) {

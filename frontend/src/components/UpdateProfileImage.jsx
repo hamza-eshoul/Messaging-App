@@ -16,7 +16,7 @@ const UpdateProfileImage = ({
 }) => {
   const [previewSource, setPreviewSource] = useState("");
   const { updateUser, isPending, error } = useUpdateUser(
-    "http://localhost:4000/user/update_profile_image"
+    "http://localhost:4000/user/profile_image"
   );
 
   useEffect(() => {

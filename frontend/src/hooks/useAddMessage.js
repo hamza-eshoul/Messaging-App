@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useAuthContext } from "./useAuthContext";
 
 export const useAddMessage = () => {
   const [error, setError] = useState(null);
+  const { user } = useAuthContext();
 
   const addMessage = async (messageInfo) => {
     const response = await fetch(
@@ -9,6 +11,7 @@ export const useAddMessage = () => {
       {
         method: "POST",
         headers: {
+          Authorization: `Bearer ${user.token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

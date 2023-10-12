@@ -22,6 +22,7 @@ export const useFetchConversation = (selectedUserConversation) => {
     const response = await fetch("http://localhost:4000/conversation", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${user.token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(conversation_info),
