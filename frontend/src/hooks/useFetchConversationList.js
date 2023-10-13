@@ -11,11 +11,14 @@ export const useFetchConversationList = () => {
     setIsPending(true);
     setError(null);
 
-    const response = await fetch("http://localhost:4000/conversation", {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      "https://odin-messaging-app-api.onrender.com/conversation",
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const json = await response.json();
 

@@ -7,7 +7,7 @@ export const useAddMessage = () => {
 
   const addMessage = async (messageInfo) => {
     const response = await fetch(
-      "http://localhost:4000/conversation/add_message",
+      "https://odin-messaging-app-api.onrender.com/conversation/add_message",
       {
         method: "POST",
         headers: {

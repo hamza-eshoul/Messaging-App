@@ -13,11 +13,14 @@ export const useFetchProfile = (profile_id) => {
     setIsLoggedInUser(false);
     setError(null);
 
-    const response = await fetch(`http://localhost:4000/user/${profile_id}`, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+    const response = await fetch(
+      `https://odin-messaging-app-api.onrender.com/user/${profile_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
 
     const json = await response.json();
 

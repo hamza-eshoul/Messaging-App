@@ -19,14 +19,17 @@ export const useFetchConversation = (selectedUserConversation) => {
       user2_id: selectedUserConversation._id,
     };
 
-    const response = await fetch("http://localhost:4000/conversation", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(conversation_info),
-    });
+    const response = await fetch(
+      "https://odin-messaging-app-api.onrender.com/conversation",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(conversation_info),
+      }
+    );
 
     const json = await response.json();
 

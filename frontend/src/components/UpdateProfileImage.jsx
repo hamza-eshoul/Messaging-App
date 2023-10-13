@@ -16,7 +16,7 @@ const UpdateProfileImage = ({
 }) => {
   const [previewSource, setPreviewSource] = useState("");
   const { updateUser, isPending, error } = useUpdateUser(
-    "http://localhost:4000/user/profile_image",
+    "https://odin-messaging-app-api.onrender.com/user/profile_image"
   );
 
   useEffect(() => {

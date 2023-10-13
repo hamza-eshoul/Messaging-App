@@ -26,7 +26,7 @@ const UpdateProfileData = ({
   const [skills, setSkills] = useState(["", "", ""]);
 
   const { updateUser, isPending, error } = useUpdateUser(
-    "http://localhost:4000/user/user_data",
+    "https://odin-messaging-app-api.onrender.com/user/user_data"
   );
 
   useEffect(() => {
