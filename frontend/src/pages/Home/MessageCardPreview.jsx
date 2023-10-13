@@ -13,6 +13,7 @@ const MessageCardPreview = ({
   selectedUserConversation,
   setSelectedUserConversation,
   conversations,
+  setIsConversationActive,
 }) => {
   const [isUserSelected, setIsUserSelected] = useState(false);
   const [previewMessage, setPreviewMessage] = useState(null);
@@ -23,7 +24,7 @@ const MessageCardPreview = ({
     const userFullName = user.firstName + " " + user.lastName;
     setPreviewMessage(`Chat with  ${userFullName} ...`);
   };
-  
+
   const populateUserConversation = (conversation) => {
     if (conversation.messages.length !== 0) {
       let lastMessage =
@@ -34,9 +35,6 @@ const MessageCardPreview = ({
       let formattedMessageTime = formatDistance(
         new Date(messageTime),
         new Date(),
-        {
-          addSuffix: true,
-        }
       );
 
       if (lastMessage.length > 49) {
@@ -82,27 +80,26 @@ const MessageCardPreview = ({
   }, [selectedUserConversation]);
 
   return (
-    <div
+    <article
       className={`${
         isUserSelected
-          ? "bg-lightOrange border-l-[2.5px] border-l-secondaryOrange "
+          ? "border-l-[2.5px] border-l-secondaryOrange bg-lightOrange "
           : "border-b-[1px] border-zinc-300"
-      } flex gap-3 items-center py-[21.6px] px-4 cursor-pointer `}
+      } flex cursor-pointer items-center gap-3 px-4 py-[21.6px] `}
       onClick={() => {
         setSelectedUserConversation(user);
+        setIsConversationActive(true);
       }}
     >
-      {/* image */}
       <div className="h-12 w-12">
         <img
           src={user.profileImg.url ? user.profileImg.url : defaultProfile}
           alt="user messager"
-          className="w-full h-full rounded-full"
+          className="h-full w-full rounded-full"
         />
       </div>
 
-      {/* card information */}
-      <div className="flex flex-col gap-1 w-[calc(100%-48px)]">
+      <div className="flex w-[calc(100%-48px)] flex-col gap-1">
         {" "}
         <div className="flex items-center justify-between">
           <span
@@ -113,24 +110,24 @@ const MessageCardPreview = ({
             {user.firstName} {user.lastName}
           </span>
           {previewMessageTime && (
-            <span className="text-zinc-500 text-xs">
+            <time className="text-xs text-zinc-500">
               {" "}
               {previewMessageTime}{" "}
-            </span>
+            </time>
           )}
         </div>
         <div className="flex items-center justify-between gap-2">
           <p
             className={`${
-              isUserSelected ? "text-primaryDark font-medium" : "text-zinc-500"
+              isUserSelected ? "font-medium text-primaryDark" : "text-zinc-500"
             } text-sm`}
           >
             {previewMessage && <span>{previewMessage}</span>}
           </p>
-          <BsCheck2All className="text-primaryOrange text-lg" />
+          <BsCheck2All className="text-lg text-primaryOrange" />
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

@@ -2,13 +2,12 @@ import logo from "../assets/images/logo.png";
 
 const DefaultMessageInterface = () => {
   return (
-    <section className="flex justify-center w-[calc(75%-96px)] h-screen items-center bg-primaryGray z-[-2]">
+    <section className="z-[-2] hidden h-screen w-[60%] items-center justify-center bg-primaryGray md:flex xmd:w-[calc(75%-96px)] xl:w-[75%]">
       {" "}
-      <div className="border-[2px] w-[40%] h-[30%] border-primaryOrange flex flex-col items-center p-6 justify-center gap-5 bg-white shadow-xl">
-        <div>
-          <img src={logo} />
-        </div>
-        <h2 className="text-4xl font-medium text-center">
+      <div className="mx-6 flex flex-col items-center justify-center gap-5 border-[2px] border-primaryOrange bg-white px-6 py-12 shadow-xl">
+        <img src={logo} />
+
+        <h2 className="text-center text-3xl font-medium">
           Welcome to the Odin Messaging App !
         </h2>
       </div>

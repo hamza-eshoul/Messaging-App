@@ -15,7 +15,6 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const { signup, isPending, error } = useSignup();
 
   const handleSignupSubmit = async (e) => {
@@ -25,19 +24,17 @@ const Signup = () => {
   };
 
   return (
-    <section className="flex h-screen w-full">
-      {/* Login */}
-      <div className="mx-auto flex flex-col justify-center px-4 xl:w-[40%] xl:px-20 2xl:px-[112px] ">
-        <div className="xsm:w-[500px] space-y-6 rounded-lg border-[1px] px-8 py-6 sm:p-12 xl:w-auto xl:border-[0px] xl:p-0">
-          <div className="mb-14 flex items-center gap-3">
-            <div className="h-16 w-16">
-              <img src={logo} alt="logo" className="h-full w-full" />
-            </div>
-            <h1 className=" text-xl font-extrabold sm:text-2xl">
+    <main className="flex h-screen w-full">
+      <section className="mx-auto flex flex-col justify-center px-4 xl:w-[40%] xl:px-20 2xl:px-[112px] ">
+        <div className="space-y-6 rounded-lg border-[1px] px-8 py-6 xsm:w-[500px] sm:p-12 xl:w-auto xl:border-[0px] xl:p-0">
+          <header className="mb-14 flex items-center gap-3">
+            <img src={logo} alt="logo" className="h-16 w-16" />
+
+            <h1 className="text-xl font-extrabold sm:text-3xl">
               {" "}
               Odin Messaging App
             </h1>
-          </div>
+          </header>
 
           <div className="flex flex-col gap-3 ">
             <h2 className="text-3xl font-bold text-[#101828] sm:text-5xl">
@@ -58,48 +55,48 @@ const Signup = () => {
             className="space-y-5 text-[#475467]"
             onSubmit={handleSignupSubmit}
           >
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-bold">First name</label>
+            <label className="form_label">
+              <span className="text-sm font-bold">First name</span>
               <input
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
                 placeholder="Enter your first name"
-                className="rounded-md border-[1px] border-zinc-300 px-2 py-1.5 outline-none"
+                className="auth_input"
               />
-            </div>
+            </label>
 
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-bold">Last name</label>
+            <label className="form_label">
+              <span className="text-sm font-bold">Last name </span>
               <input
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
                 placeholder="Enter your last name"
-                className="rounded-md border-[1px] border-zinc-300 px-2 py-1.5 outline-none"
+                className="auth_input"
               />
-            </div>
+            </label>
 
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-bold">Email</label>
+            <label className="form_label">
+              <span className="text-sm font-bold">Email</span>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                className="rounded-md border-[1px] border-zinc-300 px-2 py-1.5 outline-none"
+                className="auth_input"
               />
-            </div>
+            </label>
 
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-bold">Password</label>
+            <label className="form_label">
+              <span className="text-sm font-bold">Password</span>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="rounded-md border-[1px] border-zinc-300 px-2 py-1.5 outline-none"
+                className="auth_input"
               />
-            </div>
+            </label>
 
             <button className="flex w-full items-center justify-center rounded-md bg-primaryOrange py-2.5 font-semibold text-white">
               {isPending ? (
@@ -118,13 +115,13 @@ const Signup = () => {
             )}
           </form>
         </div>
-      </div>
+      </section>
 
       {/* Image */}
-      <div className="hidden w-[60%] xl:block">
+      <section className="hidden w-[60%] xl:block">
         <img src={dashboard} alt="login image" className="h-full w-full" />
-      </div>
-    </section>
+      </section>
+    </main>
   );
 };
 

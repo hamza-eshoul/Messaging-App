@@ -47,14 +47,14 @@ const MessagesInterfaceBody = ({
       )}
 
       {isConversationEmpty && (
-        <div className="flex justify-center pt-96 h-full text-primaryOrange text-2xl font-semibold">
+        <div className="flex h-full items-center justify-center px-6 text-center text-lg font-semibold text-primaryOrange sm:text-2xl">
           {" "}
           There are no messages in this conversation yet ...
         </div>
       )}
 
       {messagesList && (
-        <div className="flex flex-col gap-2 overflow-y-auto">
+        <section className="flex flex-col gap-2 overflow-y-auto">
           {messagesList.map((message) => (
             <MessageCard
               key={message._id}
@@ -66,7 +66,7 @@ const MessagesInterfaceBody = ({
             />
           ))}
           <div ref={messagesEndRef} />
-        </div>
+        </section>
       )}
     </>
   );

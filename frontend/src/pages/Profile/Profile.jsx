@@ -8,16 +8,16 @@ import ProfileHeader from "./ProfileHeader";
 import ProfileBody from "./ProfileBody";
 import ProfileAside from "./ProfileAside";
 
-const Profile = () => {
+const Profile = ({ user }) => {
   const { id } = useParams();
   const { userProfile, isLoggedInUser, isPending, error, setUserProfile } =
-    useFetchProfile(id);
+    useFetchProfile(id, user);
 
   if (isPending) {
     return (
       <Loading
         loadingColor={"#eb430b"}
-        loadingSize={70}
+        loadingSize={55}
         loadingHeight={"h-screen"}
       />
     );
@@ -35,9 +35,9 @@ const Profile = () => {
   }
 
   return (
-    <section className="flex flex-col w-[calc(100%-96px)] h-full">
+    <main className="mb-[48px] flex h-screen flex-col xmd:mb-0 xmd:ml-[96px]">
       <ProfileHeader userProfile={userProfile} />
-      <section className="flex gap-8 bg-primaryGray flex-grow py-12 pl-20 pr-10 h-[93%]">
+      <section className="flex h-[92%] gap-8 bg-primaryGray px-3 py-12 sm:pl-10 sm:pr-10 lg:pl-20">
         <ProfileBody
           userProfile={userProfile}
           setUserProfile={setUserProfile}
@@ -45,7 +45,7 @@ const Profile = () => {
         />
         <ProfileAside userProfile={userProfile} />
       </section>
-    </section>
+    </main>
   );
 };
 

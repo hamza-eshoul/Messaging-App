@@ -14,7 +14,7 @@ const UpdateAboutMe = ({ userProfile, setIsUpdateAboutMe, setUserProfile }) => {
   const [isUpdateAboutText, setIsUpdateAboutText] = useState(false);
 
   const { updateUser, isPending, error } = useUpdateUser(
-    "http://localhost:4000/user/user_about"
+    "http://localhost:4000/user/user_about",
   );
 
   useEffect(() => {
@@ -38,63 +38,61 @@ const UpdateAboutMe = ({ userProfile, setIsUpdateAboutMe, setUserProfile }) => {
       setIsUpdateAboutMe(false);
     }
   };
+
   return (
     <form
-      className="flex flex-col w-[500px] rounded-lg absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  z-20 bg-white shadow-lg p-4 gap-4"
+      className="absolute left-1/2 top-1/2 z-20 flex w-[80%] -translate-x-1/2 -translate-y-1/2 flex-col gap-4  rounded-lg bg-white p-2 shadow-lg sm:w-[480px] sm:p-4"
       onSubmit={handleSubmit}
     >
-      <header className="flex border-b-[1px] border-zinc-200 justify-center items-center pb-3">
-        <h1 className="text-2xl font-semibold mx-auto"> Edit About Me </h1>
-        <div
-          className="bg-zinc-100 hover:bg-zinc-200 rounded-full p-2 flex justify-center items-center cursor-pointer"
-          onClick={() => {
-            setIsUpdateAboutMe(false);
-          }}
-        >
-          <RxCross1 className="text-zinc-600 text-xl" />
-        </div>
-      </header>
-
-      <section className="flex flex-col gap-2 px-2  pb-3">
-        <div className="flex justify-between items-center border-b-[1px] border-zinc-200 w-full ">
+      <div className="flex flex-col gap-2 px-2">
+        <header className="flex w-full items-center justify-between border-b-[1px] border-zinc-200 pb-1 ">
           {" "}
-          <h1 className="text-2xl font-semibold text-primaryOrange ">
+          <h3 className="text-xl font-semibold text-primaryOrange sm:text-2xl ">
             {" "}
             About Me{" "}
-          </h1>
-          <MdMode
-            className="text-xl cursor-pointer hover:text-primaryOrange "
-            onClick={() => {
-              setIsUpdateAboutText(true);
-            }}
-          />
-        </div>
+          </h3>
+          <div className="flex items-center gap-2">
+            <MdMode
+              className="cursor-pointer hover:text-primaryOrange sm:text-xl "
+              onClick={() => {
+                setIsUpdateAboutText(true);
+              }}
+            />
+            <div
+              className="flex cursor-pointer items-center justify-center rounded-full bg-zinc-100 p-1.5 hover:bg-zinc-200"
+              onClick={() => {
+                setIsUpdateAboutMe(false);
+              }}
+            >
+              <RxCross1 className="text-zinc-600 sm:text-lg" />
+            </div>
+          </div>
+        </header>
 
         {isUpdateAboutText && (
           <textarea
             placeholder="About Me Text"
-            className="resize-none mt-1 border-primaryOrange border-[2px] rounded outline-none text-justify p-2 leading-relaxed"
+            className="mt-1 resize-none rounded border-[2px] border-primaryOrange p-2 text-justify text-sm leading-relaxed outline-none sm:text-[16px]"
             value={aboutText}
             onChange={(e) => setAboutText(e.target.value)}
           />
         )}
 
         {!isUpdateAboutText && (
-          <div className="pt-1 text-justify leading-relaxed">
+          <p className="pt-1 text-justify text-sm leading-relaxed sm:text-[16px]">
             {userProfile.aboutUser}
-          </div>
+          </p>
         )}
-      </section>
-
-      {isPending && <Loading />}
+      </div>
+      {isPending && <Loading loadingColor={"#fa4d12"} />}
       {error && <Error error={error} />}
       {!isPending && !error && (
-        <div className="flex justify-center items-center">
-          <button className="h-12 flex justify-center items-center bg-primaryOrange text-white font-semibold rounded-md  py-2 w-1/2">
+        <footer className="flex items-center justify-center">
+          <button className="flex items-center justify-center rounded bg-primaryOrange px-1.5 py-2 text-sm font-semibold text-white sm:px-4 sm:text-base">
             {" "}
             Save Changes
           </button>
-        </div>
+        </footer>
       )}
     </form>
   );

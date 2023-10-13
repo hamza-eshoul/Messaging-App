@@ -49,46 +49,46 @@ const App = () => {
 
   return (
     <>
-      <div className="h-screen flex rounded-lg">
-        {authIsReady && (
-          <BrowserRouter>
-            <Sidebar />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  user ? <Navigate to="/homepage" /> : <Navigate to="/login" />
-                }
-              />
-              <Route
-                path="/homepage"
-                element={
-                  user ? (
-                    <Homepage
-                      receivedMessage={receivedMessage}
-                      updatedReceivedConversation={updatedReceivedConversation}
-                    />
-                  ) : (
-                    <Navigate to="/login" />
-                  )
-                }
-              />
-              <Route
-                path="/profile/:id"
-                element={user ? <Profile /> : <Navigate to="/login" />}
-              />
-              <Route
-                path="/login"
-                element={!user ? <Login /> : <Navigate to="/homepage" />}
-              />
-              <Route
-                path="/signup"
-                element={!user ? <Signup /> : <Navigate to="/homepage" />}
-              />
-            </Routes>
-          </BrowserRouter>
-        )}
-      </div>
+      {authIsReady && (
+        <BrowserRouter>
+          <Sidebar />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                user ? <Navigate to="/homepage" /> : <Navigate to="/login" />
+              }
+            />
+            <Route
+              path="/homepage"
+              element={
+                user ? (
+                  <Homepage
+                    receivedMessage={receivedMessage}
+                    updatedReceivedConversation={updatedReceivedConversation}
+                  />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/profile/:id"
+              element={
+                user ? <Profile user={user} /> : <Navigate to="/login" />
+              }
+            />
+            <Route
+              path="/login"
+              element={!user ? <Login /> : <Navigate to="/homepage" />}
+            />
+            <Route
+              path="/signup"
+              element={!user ? <Signup /> : <Navigate to="/homepage" />}
+            />
+          </Routes>
+        </BrowserRouter>
+      )}
     </>
   );
 };

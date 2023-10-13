@@ -16,7 +16,7 @@ const UpdateProfileCoverImage = ({
 }) => {
   const [previewSource, setPreviewSource] = useState("");
   const { updateUser, isPending, error } = useUpdateUser(
-    "http://localhost:4000/user/cover_image"
+    "http://localhost:4000/user/cover_image",
   );
 
   useEffect(() => {
@@ -29,7 +29,6 @@ const UpdateProfileCoverImage = ({
     initiliazeUserData();
   }, []);
 
-  //   image
   const inputRef = useRef(null);
 
   const handleImageChange = (e) => {
@@ -61,49 +60,45 @@ const UpdateProfileCoverImage = ({
   };
 
   return (
-    <div className="flex flex-col w-[500px] rounded-lg absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  z-20 bg-white shadow-lg p-4 gap-4">
-      {/* Header */}
-      <header className="flex border-b-[1px] border-zinc-200 justify-center items-center pb-3">
-        <h1 className="text-2xl font-semibold mx-auto">
+    <article className="absolute left-1/2 top-1/2 z-20 flex w-[80%] -translate-x-1/2 -translate-y-1/2 flex-col gap-4  rounded-lg bg-white p-2 shadow-lg sm:w-[480px] sm:p-4">
+      <header className="flex items-center justify-center border-b-[1px] border-zinc-200 pb-3">
+        <h3 className="mx-auto text-xl font-semibold sm:text-2xl">
           {" "}
-          Edit Profile Cover Image{" "}
-        </h1>
+          Edit Cover Image{" "}
+        </h3>
         <div
-          className=" p-2 flex justify-center items-center cursor-pointer"
+          className=" flex cursor-pointer items-center justify-center p-2"
           onClick={() => {
             setIsUpdateCoverImage(false);
           }}
         >
-          <RxCross1 className="text-zinc-600 text-xl " />
+          <RxCross1 className="text-xl text-zinc-600 " />
         </div>
       </header>
 
-      {/* Picture Section */}
       <section>
         {previewSource ? (
-          <div className="border-[1px] p-4 w-full h-[300px] border-dotted flex items-center justify-center bg-zinc-100/10 border-zinc-300 rounded relative">
+          <div className="relative flex h-[250px] w-full items-center justify-center rounded border-[1px] border-dotted border-zinc-300 bg-zinc-100/10 sm:h-[300px] ">
             <img
               src={previewSource}
               alt="Cover Preview"
-              className="h-[260px] w-[260px] rounded object-fit "
+              className="object-fit h-[200px] w-[200px] rounded-full sm:h-[250px] sm:w-[250px]"
             />
             <div
-              className="absolute top-2 right-2 bg-zinc-100 hover:bg-zinc-200 rounded-full p-2 flex justify-center items-center cursor-pointer"
+              className="absolute right-2 top-2 flex cursor-pointer items-center justify-center rounded-full bg-zinc-100 p-2 hover:bg-zinc-200"
               onClick={() => setPreviewSource("")}
             >
-              <RxCross1 className="text-zinc-600 text-xl " />
+              <RxCross1 className="text-xl text-zinc-600 " />
             </div>
           </div>
         ) : (
-          <div className="border-[1px] border-dotted flex items-center justify-center bg-zinc-100/10 border-zinc-300 rounded py-3">
-            No picture added
-          </div>
+          <span className="flex items-center justify-center rounded border-[1px] border-dotted border-zinc-300 bg-zinc-100/10 py-3">
+            No image added
+          </span>
         )}
       </section>
 
-      {/* Footer */}
       <footer className="flex justify-between">
-        {/* Upload Photo */}
         <input
           type="file"
           name="myImage"
@@ -115,17 +110,17 @@ const UpdateProfileCoverImage = ({
           className="hidden"
         />
         <button
-          className="flex gap-2 items-center px-4 py-2 bg-white border-[1px] border-primaryOrange font-semibold text-[#101828] rounded"
+          className="flex items-center gap-2 rounded border-[1px] border-primaryOrange bg-white px-1.5 py-2 text-sm font-semibold text-[#101828] sm:px-4 sm:text-base"
           onClick={() => {
             inputRef.current.click();
           }}
         >
           <AiOutlinePlus className="text-primaryOrange" />
 
-          <span> Upload Photo </span>
+          <span> Upload Image </span>
         </button>
         <button
-          className="flex justify-center items-center px-4 py-2 bg-primaryOrange font-semibold text-white rounded"
+          className="flex items-center justify-center rounded bg-primaryOrange px-1.5 py-2 text-sm font-semibold text-white sm:px-4 sm:text-base"
           onClick={() => {
             uploadImage(previewSource);
           }}
@@ -135,7 +130,7 @@ const UpdateProfileCoverImage = ({
           {!isPending && !error && <span> Save Changes </span>}
         </button>{" "}
       </footer>
-    </div>
+    </article>
   );
 };
 

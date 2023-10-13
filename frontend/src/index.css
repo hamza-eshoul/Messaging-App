@@ -4,22 +4,30 @@
 
 @layer components {
   .sidebarIconsContainer {
-    @apply flex flex-col gap-8 justify-center items-center text-zinc-400 text-2xl pt-6;
+    @apply 2xsm:gap-11 flex items-center justify-center gap-6 text-2xl text-zinc-400 xsm:gap-16 sm:gap-24 xmd:flex-col xmd:gap-8 xmd:pt-6;
   }
   .activeSidebarIcons {
-    @apply border-l-[3px] border-secondaryOrange w-full flex justify-center h-12 items-center cursor-pointer text-white bg-gradient-to-l from-zinc-700/20 from-10% to-secondaryOrange/30 to-90%;
+    @apply flex h-12 w-full cursor-pointer items-center justify-center border-l-[3px] border-secondaryOrange bg-gradient-to-l from-zinc-700/20 from-10% to-secondaryOrange/30 to-90% px-4  text-white;
   }
 
   .sidebarIcon {
-    @apply cursor-pointer hover:text-white hover:scale-110 transition duration-300 ease-in-out;
+    @apply cursor-pointer transition duration-300 ease-in-out hover:scale-110 hover:text-white;
+  }
+
+  .profileMainCompetencies {
+    @apply rounded bg-zinc-200/50 px-3 py-1.5 text-sm font-medium hover:opacity-60;
+  }
+
+  .form_label {
+    @apply flex flex-col gap-1.5;
+  }
+
+  .auth_input {
+    @apply rounded-md border-[1px] border-zinc-300 px-2 py-1.5 outline-none;
   }
 }
 
 .dotted-background {
   background-image: radial-gradient(rgba(229, 63, 6, 0.3) 1px, transparent 1px);
   background-size: 25px 25px;
-}
-
-.profileMainCompetencies {
-  @apply bg-zinc-200/50 px-3 py-1.5 rounded text-sm font-medium hover:opacity-60;
 }

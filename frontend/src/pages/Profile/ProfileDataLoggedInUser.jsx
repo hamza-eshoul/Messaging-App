@@ -1,4 +1,3 @@
-import React from "react";
 import { useState } from "react";
 
 // images
@@ -53,14 +52,16 @@ const ProfileDataLoggedInUser = ({ userProfile, setUserProfile }) => {
         />
       )}
 
-      <div className="bg-white rounded-xl h-[500px] border-[1px] shadow-sm ">
-        <div className="h-[55%] w-full relative">
+      <div className="rounded-xl border-[1px] bg-white shadow-sm sm:pb-3 ">
+        <div className="relative h-[200px] w-full  sm:h-[300px]">
           <div
-            className="flex z-10 absolute bottom-4 right-4 gap-2 items-center rounded-lg  px-3 py-2 cursor-pointer bg-[#797a7b]/60 hover:bg-zinc-500/80 text-white font-medium"
+            className="absolute bottom-4 right-4 z-10 flex cursor-pointer items-center gap-2  rounded-lg bg-[#797a7b]/60 px-3 py-2 font-medium text-white hover:bg-zinc-500/80"
             onClick={() => setIsUpdateCoverImage(true)}
           >
             <BsCamera2 />
-            <button>Edit cover image</button>
+            <button className="hidden text-sm sm:block sm:text-base">
+              Edit cover image
+            </button>
           </div>
 
           {userProfile.coverImg.url && (
@@ -70,10 +71,10 @@ const ProfileDataLoggedInUser = ({ userProfile, setUserProfile }) => {
             />
           )}
           {!userProfile.coverImg.url && (
-            <div className="h-full w-full bg-gradient-to-b from-zinc-100 from-70% to-zinc-400/50 rounded-b-lg" />
+            <div className="h-full w-full rounded-b-lg bg-gradient-to-b from-zinc-100 from-70% to-zinc-400/50" />
           )}
 
-          <div className="h-40 w-40 absolute bottom-[-60px] left-10 p-1 bg-white rounded-full">
+          <div className="absolute bottom-[-60px] left-10 h-32 w-32 rounded-full bg-white p-1 sm:h-40 sm:w-40">
             <img
               src={
                 userProfile.profileImg.url
@@ -84,7 +85,7 @@ const ProfileDataLoggedInUser = ({ userProfile, setUserProfile }) => {
             />
 
             <div
-              className="absolute right-2 top-[120px] rounded-full bg-zinc-100 hover:bg-zinc-200 w-10 h-10 flex justify-center items-center cursor-pointer"
+              className="absolute right-2 top-[90px] flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-zinc-100 hover:bg-zinc-200 sm:top-[120px]"
               onClick={() => {
                 setIsUpdateProfileImage(true);
               }}
@@ -94,60 +95,54 @@ const ProfileDataLoggedInUser = ({ userProfile, setUserProfile }) => {
           </div>
         </div>
 
-        <div className="ml-56 mt-5 space-y-2">
-          <div className="flex justify-between pr-8">
-            <h1 className="text-4xl font-medium">
+        <div className="mt-10 space-y-2 p-7 sm:ml-56 sm:mt-5 sm:p-2">
+          <div className="flex items-center justify-between sm:pr-8">
+            <h2 className="text-2xl font-medium sm:text-4xl">
               {userProfile.firstName} {userProfile.lastName}
-            </h1>
+            </h2>
 
             <FaEdit
-              className="text-2xl cursor-pointer hover:opacity-50"
+              className="cursor-pointer text-xl hover:opacity-50 sm:text-2xl"
               onClick={() => setIsUpdateProfileData(true)}
             />
           </div>
 
-          <h3 className="text-zinc-500">
+          <div className="text-sm text-zinc-500 sm:text-base">
             Profession •
             {userProfile.profession && <span> {userProfile.profession}</span>}
             {!userProfile.profession && (
-              <span className="text-zinc-800 italic ">
+              <span className="italic text-zinc-800 ">
                 {" "}
                 The User Has Not Inserted A Profession Yet
               </span>
             )}
             {userProfile.employer && <span> • {userProfile.employer} </span>}
-          </h3>
-          <h3 className="text-zinc-500">
+          </div>
+          <div className="text-sm text-zinc-500 sm:text-base">
             Location •{" "}
             {userProfile.location && <span>{userProfile.location}</span>}
             {!userProfile.location && (
-              <span className="text-zinc-800 italic ">
+              <span className="italic text-zinc-800 ">
                 {" "}
                 The User Has Not Inserted A Location Yet
               </span>
             )}
-          </h3>
+          </div>
 
-          {/* Main skills */}
-
-          <div className="flex gap-2 pt-3 items-center">
-            <h3 className="text-zinc-500">Main Skills •</h3>
+          <div className="flex flex-wrap items-center gap-2 pt-3 text-sm sm:text-base">
+            <span className="text-zinc-500">Main Skills •</span>
             {userProfile.skills.length !== 0 && (
-              <>
+              <ul className="flex flex-wrap gap-3">
                 {userProfile.skills.map((skill) => (
-                  <React.Fragment key={skill}>
+                  <li key={skill} className="profileMainCompetencies">
                     {" "}
-                    {skill == "" ? (
-                      ""
-                    ) : (
-                      <div className="profileMainCompetencies"> {skill} </div>
-                    )}
-                  </React.Fragment>
+                    {skill == "" ? "" : <>{skill} </>}
+                  </li>
                 ))}
-              </>
+              </ul>
             )}
             {userProfile.skills.length == 0 && (
-              <span className="text-zinc-800 italic ">
+              <span className="italic text-zinc-800 ">
                 {" "}
                 The User Has Not Inserted Main Skills Yet
               </span>

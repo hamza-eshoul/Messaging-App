@@ -12,23 +12,27 @@ const UserMessagesList = ({
   conversations,
   selectedUserConversation,
   setSelectedUserConversation,
+  isConversationActive,
+  setIsConversationActive,
 }) => {
   const { users, isPending, error } = useFetchUsers();
 
   return (
-    <section className="border-r-[1px] border-zinc-300 w-[25%] h-full">
-      {/* Header */}
-      <div className="flex gap-2 items-center  border-b-[1px] border-zinc-300 pl-4 h-[8%]">
+    <section
+      className={`w-full ${
+        isConversationActive ? "hidden" : ""
+      } mb-[48px] border-r-[1px] border-zinc-300 md:block md:w-[40%] xmd:mb-0 xl:w-[30%]`}
+    >
+      <header className="flex h-[8%] items-center  gap-2 border-b-[1px] border-zinc-300 pl-4">
         <RiMenuFoldFill className="text-2xl" />
-        <h1 className="font-medium text-lg pb-1">User Messages</h1>
-      </div>
+        <h1 className="pb-1 text-lg font-medium">User Messages</h1>
+      </header>
 
-      {/* User Messages */}
-      <div className="flex flex-col h-[92%] overflow-y-auto">
+      <section className="flex h-[92%] flex-col overflow-y-auto">
         {isPending && (
           <Loading
             loadingColor={"#fa4d12"}
-            size={50}
+            loadingSize={55}
             loadingHeight={"h-screen"}
           />
         )}
@@ -48,10 +52,11 @@ const UserMessagesList = ({
               user={user}
               selectedUserConversation={selectedUserConversation}
               setSelectedUserConversation={setSelectedUserConversation}
+              setIsConversationActive={setIsConversationActive}
               conversations={conversations}
             />
           ))}{" "}
-      </div>
+      </section>
     </section>
   );
 };

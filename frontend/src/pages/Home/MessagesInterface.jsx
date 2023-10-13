@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useEffect } from "react";
+
 // components
 import DefaultMessageInterface from "../../components/DefaultMessageInterface";
 import MessagesInterfaceBody from "./MessagesInterfaceBody";
@@ -12,6 +13,8 @@ const MessagesInterface = ({
   setConversations,
   receivedMessage,
   updatedReceivedConversation,
+  isConversationActive,
+  setIsConversationActive,
 }) => {
   const [messagesList, setMessagesList] = useState(null);
   const { user } = useAuthContext();
@@ -49,11 +52,17 @@ const MessagesInterface = ({
   }
 
   return (
-    <section className="flex flex-col w-[calc(75%-96px)]">
+    <section
+      className={`${
+        !isConversationActive ? "hidden" : ""
+      }  mb-[48px] w-full flex-col md:flex md:w-[60%] xmd:mb-0  xl:w-[70%]`}
+    >
       <MessageInterfaceHeader
         selectedUserConversation={selectedUserConversation}
+        setIsConversationActive={setIsConversationActive}
+        setMessagesList={setMessagesList}
       />
-      <div className="flex-grow flex flex-col justify-between bg-[#fbf5f3] h-[92%] dotted-background ">
+      <section className="dotted-background flex h-[92%] flex-grow flex-col justify-between bg-[#fbf5f3] ">
         <MessagesInterfaceBody
           messagesList={messagesList}
           setMessagesList={setMessagesList}
@@ -67,7 +76,7 @@ const MessagesInterface = ({
           selectedUserConversation={selectedUserConversation}
           setMessagesList={setMessagesList}
         />
-      </div>
+      </section>
     </section>
   );
 };

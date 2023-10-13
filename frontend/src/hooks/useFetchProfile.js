@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuthContext } from "./useAuthContext";
 
 export const useFetchProfile = (profile_id) => {
-  const [isPending, setIsPending] = useState(false);
+  const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
@@ -37,10 +37,8 @@ export const useFetchProfile = (profile_id) => {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchProfile(profile_id);
-    }
-  }, [user]);
+    fetchProfile(profile_id);
+  }, [profile_id]);
 
   return { userProfile, isLoggedInUser, isPending, error, setUserProfile };
 };

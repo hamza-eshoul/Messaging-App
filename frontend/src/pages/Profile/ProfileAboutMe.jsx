@@ -9,6 +9,7 @@ import UpdateAboutMe from "../../components/UpdateAboutMe";
 
 const ProfileAboutMe = ({ userProfile, setUserProfile, isLoggedInUser }) => {
   const [isUpdateAboutMe, setIsUpdateAboutMe] = useState(false);
+
   return (
     <>
       {isUpdateAboutMe && (
@@ -22,23 +23,23 @@ const ProfileAboutMe = ({ userProfile, setUserProfile, isLoggedInUser }) => {
         </>
       )}
 
-      <div className="bg-white rounded-xl border-[1px] shadow-sm p-7 space-y-3 ">
-        <div className="flex justify-between items-center">
-          <h1 className="text-4xl font-medium"> About Me </h1>
+      <div className="space-y-3 rounded-xl border-[1px] bg-white p-7 shadow-sm ">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-medium sm:text-4xl"> About Me </h2>
           {isLoggedInUser && (
             <FaUserEdit
-              className="text-3xl cursor-pointer hover:opacity-50"
+              className="cursor-pointer text-2xl hover:opacity-50 sm:text-3xl"
               onClick={() => setIsUpdateAboutMe(!isUpdateAboutMe)}
             />
           )}
         </div>
 
         {userProfile && userProfile.aboutUser ? (
-          <p className="leading-loose w-[90%] text-justify">
+          <p className="w-[90%] text-justify text-sm leading-loose sm:text-[16px]">
              {userProfile.aboutUser}
           </p>
         ) : (
-          <p className="leading-loose w-[90%] text-justify">
+          <p className="w-[90%] text-justify text-sm leading-loose sm:text-base">
             {" "}
             The user has not inserted an "About Me" presentation yet ...{" "}
           </p>

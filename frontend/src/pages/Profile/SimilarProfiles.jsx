@@ -27,43 +27,50 @@ const SimilarProfiles = () => {
 
   return (
     <ProfileCard cardTitle="Similar profiles">
-      {isPending && <Loading loadingColor={"#1A1B1C"} loadingSize={30} />}
+      {isPending && <Loading loadingColor={"#fa4d12"} loadingSize={35} />}
       {error && (
-        <div className="text-primaryDark font-semibold text-lg text-center pt-4">
+        <div className="pt-4 text-center text-lg font-semibold text-primaryDark">
           {error}
         </div>
       )}
 
-      {shuffledAndSlicedUsersList &&
-        shuffledAndSlicedUsersList.map((user) => (
-          <Link
-            to={`/profile/${user._id}`}
-            key={user._id}
-            className="flex gap-3 items-center py-1.5 cursor-pointer"
-          >
-            {/* image */}
-            <div className="h-12 w-12">
-              <img
-                src={user.profileImg.url ? user.profileImg.url : defaultProfile}
-                className="h-full w-full rounded-full"
-              />
-            </div>
-            {/* profile info */}
-            <div className="flex flex-col gap-1">
-              <h3 className="font-semibold">
-                {user.firstName} {user.lastName}
-              </h3>
-              {user.profession ? (
-                <h4 className="text-sm text-zinc-500">{user.profession} </h4>
-              ) : (
-                <h4 className="text-sm text-zinc-500">
-                  {" "}
-                  No profession inserted{" "}
-                </h4>
-              )}
-            </div>
-          </Link>
-        ))}
+      <ul className="space-y-3">
+        {shuffledAndSlicedUsersList &&
+          shuffledAndSlicedUsersList.map((user) => (
+            <li>
+              <Link
+                to={`/profile/${user._id}`}
+                key={user._id}
+                className="flex cursor-pointer items-center gap-3 py-1.5"
+              >
+                <div className="h-12 w-12">
+                  <img
+                    src={
+                      user.profileImg.url ? user.profileImg.url : defaultProfile
+                    }
+                    className="h-full w-full rounded-full"
+                  />
+                </div>
+                {/* profile info */}
+                <div className="flex flex-col gap-1">
+                  <span className="font-semibold">
+                    {user.firstName} {user.lastName}
+                  </span>
+                  {user.profession ? (
+                    <span className="text-sm text-zinc-500">
+                      {user.profession}{" "}
+                    </span>
+                  ) : (
+                    <span className="text-sm text-zinc-500">
+                      {" "}
+                      No profession inserted{" "}
+                    </span>
+                  )}
+                </div>
+              </Link>
+            </li>
+          ))}
+      </ul>
     </ProfileCard>
   );
 };

@@ -2,8 +2,8 @@ import defaultProfile from "../../assets/images/defaultProfile.png";
 
 const ProfileHeader = ({ userProfile }) => {
   return (
-    <div className="flex items-center justify-between border-b-[1px] border-zinc-300 px-7 h-[7%] ">
-      <p className="text-lg font-medium">My Messenging Profile</p>
+    <header className="flex h-[8%] items-center justify-between border-b-[1px] border-zinc-300 px-2 py-1 sm:px-7 ">
+      <h1 className="text-sm font-medium sm:text-lg">My Messenging Profile</h1>
 
       <div className="flex items-center gap-3">
         <div className="h-10 w-10">
@@ -19,13 +19,13 @@ const ProfileHeader = ({ userProfile }) => {
           )}
         </div>
         {userProfile && (
-          <span className="font-medium">
+          <span className="text-sm font-medium sm:text-base">
             {" "}
             {userProfile.firstName} {userProfile.lastName}
           </span>
         )}
       </div>
-    </div>
+    </header>
   );
 };
 

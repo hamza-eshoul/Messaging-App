@@ -33,7 +33,7 @@ const Sidebar = () => {
   }
 
   return (
-    <aside className="flex flex-col justify-between min-h-screen w-24 bg-primaryDark">
+    <nav className="fixed bottom-0 flex w-full justify-center gap-6 bg-primaryDark xsm:gap-16 xmd:min-h-screen xmd:w-24 xmd:flex-col xmd:justify-between">
       {toastNotification && (
         <Toast
           toastNotification={toastNotification}
@@ -44,34 +44,28 @@ const Sidebar = () => {
         />
       )}
 
-      <main className="flex flex-col">
-        {/* logo */}
-        <div className="h-22 flex flex-col space-y-4 justify-center items-center pt-5">
-          <div className="h-12 w-12">
-            <img src={logo} alt="app logo" className="h-full w-full" />
-          </div>
-          <div className=" bg-zinc-600 h-[1px] w-[70%]" />
+      <section className="flex items-center justify-center xmd:flex-col xmd:items-stretch">
+        <div className="h-22 hidden flex-col items-center justify-center space-y-4 pt-5 xmd:flex">
+          <img src={logo} alt="app logo" className="h-12 w-12" />
+
+          <div className=" h-[1px] w-[70%] bg-zinc-600" />
         </div>{" "}
         <SidebarIcons
           user={user}
           toggleToastNotification={toggleToastNotification}
         />
-      </main>
+      </section>
 
-      {/* sidebar footer */}
-      <div className="flex flex-col gap-14 justify-center items-center">
-        {/* footer icons */}
+      <footer className="2xsm:gap-11 flex items-center justify-center gap-6 xsm:gap-16 sm:gap-20 xmd:flex-col xmd:gap-14">
         <div className="sidebarIconsContainer">
           <IoMdLogOut className="sidebarIcon" onClick={logout} />
         </div>
 
-        {/* user image */}
-
-        <div className=" space-y-6 flex flex-col justify-center items-center pb-5 ">
-          <div className=" bg-zinc-600 w-12 h-[1.5px] " />
+        <div className="flex items-center justify-center xmd:flex-col xmd:space-y-6 xmd:pb-5 ">
+          <div className=" hidden h-[1.5px] w-12 bg-zinc-600 xmd:block " />
           {user && (
             <div
-              className="h-12 w-12 cursor-pointer"
+              className="h-8 w-8 cursor-pointer xmd:h-12 xmd:w-12"
               onClick={() => navigate("/profile/64e5f514be01e5666f6e75de")}
             >
               <img
@@ -82,8 +76,8 @@ const Sidebar = () => {
             </div>
           )}
         </div>
-      </div>
-    </aside>
+      </footer>
+    </nav>
   );
 };
 

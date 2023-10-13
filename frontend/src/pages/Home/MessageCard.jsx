@@ -30,28 +30,26 @@ const MessageCard = ({
 
   if (isLoggedInUser) {
     return (
-      <div className="flex justify-end gap-3 items-center py-3 px-4">
-        {/* message information */}
-        <div className="flex flex-col gap-1">
+      <div className="flex items-center justify-end gap-3 px-4 py-3">
+        <article className="flex flex-col gap-1">
           {" "}
           <div className="flex items-center justify-between gap-4">
             <span className="text-sm text-zinc-900">You</span>
-            <span className="text-zinc-500 text-xs"> {formattedDate}</span>
+            <time className="text-xs text-zinc-500"> {formattedDate}</time>
           </div>
-          {/* card message */}
           <div
             onMouseOver={() => setIsHoverDeleteMessage(true)}
             onMouseLeave={() => {
               setIsHoverDeleteMessage(false);
               setIsDeleteMessage(false);
             }}
-            className="bg-primaryOrange text-white max-w-[500px] rounded-b-lg rounded-tr-lg shadow-md text-sm p-3 flex justify-between gap-1"
+            className="flex max-w-[500px] justify-between gap-1 rounded-b-lg rounded-tr-lg bg-primaryOrange p-3 text-sm text-white shadow-md"
           >
-            <div className="text-justify">{message.content} </div>
+            <span className="text-justify">{message.content} </span>
             {isHoverDeleteMessage && (
               <div className="relative">
                 <MdKeyboardArrowDown
-                  className="text-white text-xl place-self-start cursor-pointer"
+                  className="cursor-pointer place-self-start text-xl text-white"
                   onClick={() => setIsDeleteMessage(!isDeleteMessage)}
                 />
 
@@ -69,18 +67,17 @@ const MessageCard = ({
             )}
 
             {!isHoverDeleteMessage && (
-              <BsCheck2All className="text-white place-self-end relative" />
+              <BsCheck2All className="relative place-self-end text-white" />
             )}
           </div>
-        </div>
+        </article>
       </div>
     );
   }
 
   if (!isLoggedInUser) {
     return (
-      <div className="flex gap-3 items-center py-3 px-4">
-        {/* image */}
+      <article className="flex items-center gap-3 px-4 py-3">
         <div className="h-10 w-10">
           <img
             src={
@@ -89,24 +86,22 @@ const MessageCard = ({
                 : defaultProfile
             }
             alt="user messager"
-            className="w-full h-full rounded-full"
+            className="h-full w-full rounded-full"
           />
         </div>
 
-        {/* card information */}
         <div className="flex flex-col gap-1">
           {" "}
           <div className="flex items-center justify-between gap-4">
             <span className="text-sm text-zinc-900">{message.author}</span>
-            <span className="text-zinc-500 text-xs"> {formattedDate}</span>
+            <time className="text-xs text-zinc-500"> {formattedDate}</time>
           </div>
-          {/* card message */}
-          <div className="bg-white max-w-[500px] rounded-b-lg rounded-tr-lg shadow-md text-sm p-3 flex gap-1 justify-between">
-            <div className="text-justify">{message.content} </div>
-            <BsCheck2All className="text-white place-self-end relative" />
+          <div className="flex max-w-[500px] justify-between gap-1 rounded-b-lg rounded-tr-lg bg-white p-3 text-sm shadow-md">
+            <span className="text-justify">{message.content} </span>
+            <BsCheck2All className="relative place-self-end text-white" />
           </div>
         </div>
-      </div>
+      </article>
     );
   }
 };

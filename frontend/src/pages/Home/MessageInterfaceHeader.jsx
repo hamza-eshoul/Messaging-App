@@ -5,11 +5,23 @@ import defaultProfile from "../../assets/images/defaultProfile.png";
 
 // icons
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { LuArrowLeft } from "react-icons/lu";
 
-const MessageInterfaceHeader = ({ selectedUserConversation }) => {
+const MessageInterfaceHeader = ({
+  selectedUserConversation,
+  setIsConversationActive,
+  setMessagesList,
+}) => {
   return (
-    <div className="flex gap-3 items-center border-b-[1px] border-zinc-300 h-[8%] px-4">
-      {/* image */}
+    <header className="flex h-[8%] items-center gap-3 border-b-[1px] border-zinc-300 px-4">
+      <LuArrowLeft
+        className="cursor-pointer text-2xl hover:text-primaryOrange md:hidden"
+        onClick={() => {
+          setMessagesList(null);
+          setIsConversationActive(false);
+        }}
+      />
+
       <div className="h-10 w-10">
         <img
           src={
@@ -18,32 +30,28 @@ const MessageInterfaceHeader = ({ selectedUserConversation }) => {
               : defaultProfile
           }
           alt="user messager"
-          className="w-full h-full rounded-full"
+          className="h-full w-full rounded-full"
         />
       </div>
 
-      {/* User information */}
-
-      <div className="flex items-center justify-between w-full">
+      <div className="flex w-full items-center justify-between">
         <div className="flex flex-col">
           {" "}
           <Link
             to={`/profile/${selectedUserConversation._id}`}
-            className="font-medium cursor-pointer hover:opacity-60"
+            className="cursor-pointer font-medium hover:opacity-60"
           >
             {selectedUserConversation.firstName}{" "}
             {selectedUserConversation.lastName}
           </Link>
-          <p className="text-zinc-500 text-xs">
+          <span className="text-xs text-zinc-500">
             {selectedUserConversation.email}
-          </p>
+          </span>
         </div>
 
-        <div className="flex gap-2">
-          <BsThreeDotsVertical className="text-2xl hover:opacity-50 cursor-pointer" />
-        </div>
+        <BsThreeDotsVertical className="cursor-pointer text-2xl hover:opacity-50" />
       </div>
-    </div>
+    </header>
   );
 };
 

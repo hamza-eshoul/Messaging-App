@@ -4,7 +4,7 @@ import ProfileData from "./ProfileData";
 
 const ProfileBody = ({ userProfile, setUserProfile, isLoggedInUser }) => {
   return (
-    <div className="flex flex-col gap-6 w-[80%] h-full">
+    <section className="flex h-full w-full flex-col gap-6 overflow-auto lg:w-[70%] xl:w-[75%]">
       <ProfileData
         userProfile={userProfile}
         setUserProfile={setUserProfile}
@@ -16,7 +16,7 @@ const ProfileBody = ({ userProfile, setUserProfile, isLoggedInUser }) => {
         setUserProfile={setUserProfile}
         isLoggedInUser={isLoggedInUser}
       />
-    </div>
+    </section>
   );
 };
 
