@@ -54,7 +54,7 @@ const MessagesInterfaceBody = ({
       )}
 
       {messagesList && (
-        <section className="flex flex-col gap-2 overflow-y-auto">
+        <section className="flex flex-col gap-2">
           {messagesList.map((message) => (
             <MessageCard
               key={message._id}

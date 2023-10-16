@@ -62,7 +62,7 @@ const MessagesInterface = ({
         setIsConversationActive={setIsConversationActive}
         setMessagesList={setMessagesList}
       />
-      <section className="dotted-background flex h-[92%] flex-grow flex-col justify-between bg-[#fbf5f3] ">
+      <section className="dotted-background flex h-[92%] flex-grow flex-col justify-between overflow-y-auto bg-[#fbf5f3]">
         <MessagesInterfaceBody
           messagesList={messagesList}
           setMessagesList={setMessagesList}

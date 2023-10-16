@@ -70,7 +70,7 @@ const AddMessage = ({
   };
 
   return (
-    <section className="relative mx-5 my-5 flex items-center justify-between rounded-lg bg-white p-3.5 shadow-lg">
+    <section className="relative mx-5 mb-7 flex items-center justify-between rounded-lg bg-white p-3.5 shadow-lg">
       <div className="flex w-full items-center gap-2">
         <MdOutlineEmojiEmotions
           className="hidden cursor-pointer text-2xl text-zinc-500 transition duration-300 hover:scale-110 sm:block"
