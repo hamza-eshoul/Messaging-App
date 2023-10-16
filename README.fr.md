@@ -6,6 +6,12 @@ Ce dépôt comprend le Full Stack Messaging App projet créé pour [Odin Project
 
 L'objectif de ce projet est de créer une application Web de messagerie permettant aux utilisateurs d'envoyer et de recevoir des messages en temps réel.
 
+Une API RESTful a été créé à l'aide d'ExpressJS et sert de backend au projet.
+
+Une interface utilisateur intuitive a été créé à l'aide de ReactJS et sert de frontend au projet.
+
+La bibliothèque Socket.IO a été utilisée pour la fonctionnalité de communication en temps réel entre la partie frontend et backend du projet.
+
 - Lien du projet - https://messaging-app-project.onrender.com
 - Dépôt frontend du projet - https://github.com/skynter/Messaging-App-Frontend
 - Dépôt backend du projet - https://github.com/skynter/Messaging-App-Backend

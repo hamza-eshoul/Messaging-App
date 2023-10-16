@@ -65,6 +65,7 @@ npm run dev
 ```
 
 - Open http://localhost:5173 with your browser to access a local version of the project's client
+
 - The API endpoints listed in the backend folder can be accessed through the hosted API on https://odin-messaging-app-api.onrender.com
 
 - The two main API endpoints are the GET https://odin-messaging-app-api.onrender.com/conversation endpoint and the POST https://odin-messaging-app-api.onrender.com/conversation/add_message
