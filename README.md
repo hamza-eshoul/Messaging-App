@@ -10,7 +10,7 @@ A restful API was built using ExpressJS and serves as the project's backend.
 
 An intuitive User Interface was built using ReactJS and serves as the project's frontend.
 
-The Socket.IO library wa used for the real-time communication functionality between the project's client and server.
+The Socket.IO library was used for the real-time communication functionality between the project's client and server.
 
 - Project's Live Preview url - https://messaging-app-project.onrender.com
 - Project's Frontend Repository - https://github.com/skynter/Messaging-App-Frontend
@@ -22,7 +22,7 @@ The Socket.IO library wa used for the real-time communication functionality betw
 
 ## Profile Page
 
-![Article's Page Screenshot](/screenshots//Profile-screenshot.png)
+![Profile's page Screenshot](/screenshots//Profile-screenshot.png)
 
 ## Mobile Version
 
@@ -40,7 +40,7 @@ The Socket.IO library wa used for the real-time communication functionality betw
 
 ## Key features
 
-- Real-time transmission of messages between users.
+- Real-time transmission of messages between users
 - Integration with RESTful backend API
 - Persistent Authentication using JWTs
 - Customizing users profiles
@@ -52,7 +52,7 @@ The Socket.IO library wa used for the real-time communication functionality betw
 
 To run the project locally :
 
-- Access the project's frontend folder and run the following command to install the project's dependecies
+- Access the project's frontend folder and run the following command to install the project's dependencies
 
 ```
 npm install
