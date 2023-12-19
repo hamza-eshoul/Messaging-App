@@ -11,7 +11,9 @@ exports.get_conversations = async (req, res) => {
 };
 
 exports.get_conversation = async (req, res) => {
-  const { user1_id, user2_id } = req.params;
+  const { user2_id } = req.params;
+
+  const user1_id = req.user._id;
 
   try {
     const conversation = await Conversation.findOne({
