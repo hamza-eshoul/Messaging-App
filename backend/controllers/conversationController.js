@@ -11,7 +11,7 @@ exports.get_conversations = async (req, res) => {
 };
 
 exports.get_conversation = async (req, res) => {
-  const { user1_id, user2_id } = req.body;
+  const { user1_id, user2_id } = req.params;
 
   try {
     const conversation = await Conversation.findOne({
@@ -27,8 +27,10 @@ exports.get_conversation = async (req, res) => {
   }
 };
 
-exports.add_message = async (req, res) => {
-  const { user1_id, user2_id, author, content, authorImage } = req.body;
+exports.add_conversation_message = async (req, res) => {
+  const { user2_id, author, content, authorImage } = req.body;
+
+  const user1_id = req.user._id;
 
   try {
     const conversationExists = await Conversation.findOne({
@@ -79,8 +81,10 @@ exports.add_message = async (req, res) => {
   }
 };
 
-exports.delete_message = async (req, res) => {
-  const { user1_id, user2_id, message_id } = req.body;
+exports.delete_conversation_message = async (req, res) => {
+  const { user2_id, message_id } = req.body;
+
+  const user1_id = req.user._id;
 
   try {
     const conversation = await Conversation.findOne({

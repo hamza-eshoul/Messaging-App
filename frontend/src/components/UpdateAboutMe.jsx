@@ -14,7 +14,7 @@ const UpdateAboutMe = ({ userProfile, setIsUpdateAboutMe, setUserProfile }) => {
   const [isUpdateAboutText, setIsUpdateAboutText] = useState(false);
 
   const { updateUser, isPending, error } = useUpdateUser(
-    "https://odin-messaging-app-api.onrender.com/user/user_about"
+    "https://odin-messaging-app-api.onrender.com/users/profile_about"
   );
 
   useEffect(() => {
@@ -29,9 +29,7 @@ const UpdateAboutMe = ({ userProfile, setIsUpdateAboutMe, setUserProfile }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user_id = userProfile._id;
-
-    const updated_user = await updateUser({ user_id, aboutText });
+    const updated_user = await updateUser({ aboutText });
 
     if (!error) {
       setUserProfile(updated_user);

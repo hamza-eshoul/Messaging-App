@@ -12,7 +12,7 @@ export const useFetchConversationList = () => {
     setError(null);
 
     const response = await fetch(
-      "https://odin-messaging-app-api.onrender.com/conversation",
+      "https://odin-messaging-app-api.onrender.com/conversations",
       {
         headers: {
           Authorization: `Bearer ${user.token}`,

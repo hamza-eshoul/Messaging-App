@@ -13,7 +13,7 @@ export const useFetchUsers = () => {
     setError(null);
 
     const response = await fetch(
-      "https://odin-messaging-app-api.onrender.com/user",
+      "https://odin-messaging-app-api.onrender.com/users",
       {
         headers: {
           Authorization: `Bearer ${user.token}`,

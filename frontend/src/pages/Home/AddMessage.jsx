@@ -21,7 +21,6 @@ const AddMessage = ({
 
   const handleAddMessage = async () => {
     const messageInfo = {
-      user1_id: user._id,
       user2_id: selectedUserConversation._id,
       author: user.firstName + " " + user.lastName,
       content: messageContent,

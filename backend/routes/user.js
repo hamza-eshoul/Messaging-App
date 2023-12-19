@@ -17,9 +17,9 @@ router.get("/:id", requireAuth, userController.get_user);
 
 // update user data
 
-router.put("/user_data", requireAuth, userController.update_user_data);
+router.put("/profile_data", requireAuth, userController.update_profile_data);
 
-router.put("/user_about", requireAuth, userController.update_user_about);
+router.put("/profile_about", requireAuth, userController.update_profile_about);
 
 // update user image
 router.put(
@@ -28,6 +28,10 @@ router.put(
   userController.update_user_profile_image
 );
 
-router.put("/cover_image", requireAuth, userController.update_user_cover_image);
+router.put(
+  "/profile_cover_image",
+  requireAuth,
+  userController.update_profile_cover_image
+);
 
 module.exports = router;

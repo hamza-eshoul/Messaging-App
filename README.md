@@ -68,4 +68,4 @@ npm run dev
 
 - The API endpoints listed in the backend folder can be accessed through the hosted API on https://odin-messaging-app-api.onrender.com
 
-- The two main API endpoints are the GET https://odin-messaging-app-api.onrender.com/conversation endpoint and the POST https://odin-messaging-app-api.onrender.com/conversation/add_message
+- The two main API endpoints are the GET https://odin-messaging-app-api.onrender.com/conversations endpoint and the POST https://odin-messaging-app-api.onrender.com/conversations/add_message

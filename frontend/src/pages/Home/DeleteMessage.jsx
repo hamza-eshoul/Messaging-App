@@ -12,7 +12,6 @@ const DeleteMessage = ({
 
   const handleDeleteMessage = async () => {
     const deleteMessageInfo = {
-      user1_id: user._id,
       user2_id: selectedUserConversation._id,
       message_id: message._id,
     };
@@ -38,7 +37,7 @@ const DeleteMessage = ({
 
   return (
     <div
-      className="bg-white hover:bg-zinc-100 text-primaryDark cursor-pointer p-3 m-2 w-48 absolute right-1 top-2.5 shadow-md rounded"
+      className="absolute right-1 top-2.5 m-2 w-48 cursor-pointer rounded bg-white p-3 text-primaryDark shadow-md hover:bg-zinc-100"
       onClick={() => {
         setIsDeleteMessage(null);
         handleDeleteMessage();

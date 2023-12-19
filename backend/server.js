@@ -10,8 +10,8 @@ const userRoutes = require("./routes/user");
 const conversationRoutes = require("./routes/conversation");
 
 // middleware functions
-app.use(express.json({ limit: "50mb" }));
 app.use(cors());
+app.use(express.json({ limit: "50mb" }));
 
 // initialize app and socket.io
 const io = new Server(server, {
@@ -19,8 +19,8 @@ const io = new Server(server, {
 });
 
 // routes
-app.use("/user", userRoutes);
-app.use("/conversation", conversationRoutes);
+app.use("/users", userRoutes);
+app.use("/conversations", conversationRoutes);
 
 // socket.io logic
 let users = [];

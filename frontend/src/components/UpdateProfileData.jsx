@@ -26,7 +26,7 @@ const UpdateProfileData = ({
   const [skills, setSkills] = useState(["", "", ""]);
 
   const { updateUser, isPending, error } = useUpdateUser(
-    "https://odin-messaging-app-api.onrender.com/user/user_data"
+    "https://odin-messaging-app-api.onrender.com/users/profile_data"
   );
 
   useEffect(() => {
@@ -58,10 +58,7 @@ const UpdateProfileData = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const user_id = userProfile._id;
-
     const updated_user = await updateUser({
-      user_id,
       firstName,
       lastName,
       email,

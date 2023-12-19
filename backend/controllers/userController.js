@@ -59,21 +59,13 @@ exports.get_user = async (req, res) => {
   }
 };
 
-exports.update_user_data = async (req, res) => {
-  const {
-    user_id,
-    firstName,
-    lastName,
-    email,
-    profession,
-    employer,
-    location,
-    skills,
-  } = req.body;
+exports.update_profile_data = async (req, res) => {
+  const { firstName, lastName, email, profession, employer, location, skills } =
+    req.body;
 
   try {
     const updatedUserData = await User.findByIdAndUpdate(
-      user_id,
+      req.user._id,
       {
         $set: {
           firstName,
@@ -94,12 +86,12 @@ exports.update_user_data = async (req, res) => {
   }
 };
 
-exports.update_user_about = async (req, res) => {
-  const { user_id, aboutText } = req.body;
+exports.update_profile_about = async (req, res) => {
+  const { aboutText } = req.body;
 
   try {
     const updateUserInfo = await User.findByIdAndUpdate(
-      user_id,
+      req.user._id,
       {
         $set: {
           aboutUser: aboutText,
@@ -115,12 +107,12 @@ exports.update_user_about = async (req, res) => {
 };
 
 exports.update_user_profile_image = async (req, res) => {
-  const { user_id, imageUrl } = req.body;
+  const { imageUrl } = req.body;
 
   try {
     if (!imageUrl) {
       const updatedUserEmptyProfileImage = await User.findByIdAndUpdate(
-        user_id,
+        req.user._id,
         {
           $set: {
             profileImg: {
@@ -141,7 +133,7 @@ exports.update_user_profile_image = async (req, res) => {
       });
 
       const updatedUser = await User.findByIdAndUpdate(
-        user_id,
+        req.user._id,
         {
           $set: {
             profileImg: {
@@ -159,13 +151,13 @@ exports.update_user_profile_image = async (req, res) => {
   }
 };
 
-exports.update_user_cover_image = async (req, res) => {
-  const { user_id, imageUrl } = req.body;
+exports.update_profile_cover_image = async (req, res) => {
+  const { imageUrl } = req.body;
 
   try {
     if (!imageUrl) {
       const updatedUserEmptyCoverImage = await User.findByIdAndUpdate(
-        user_id,
+        req.user._id,
         {
           $set: {
             coverImg: {
@@ -184,8 +176,9 @@ exports.update_user_cover_image = async (req, res) => {
         folder: "messaging_app_profile_cover_images",
       });
 
+      // find user and update his coverImage field
       const updatedUser = await User.findByIdAndUpdate(
-        user_id,
+        req.user._id,
         {
           $set: {
             coverImg: {

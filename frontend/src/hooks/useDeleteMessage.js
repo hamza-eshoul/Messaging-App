@@ -11,7 +11,7 @@ export const useDeleteMessage = () => {
     setError(null);
 
     const response = await fetch(
-      "https://odin-messaging-app-api.onrender.com/conversation/delete_message",
+      "https://odin-messaging-app-api.onrender.com/conversations/message",
       {
         method: "DELETE",
         headers: {

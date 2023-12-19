@@ -68,4 +68,4 @@ npm run dev
 
 - Les points de terminaison de l'API figurant au niveau du dossier backend du projet sont accessibles à travers l'API hébergé sur https://odin-messaging-app-api.onrender.com
 
-- Les deux points de terminaisons principaux de l'API sont le GET https://odin-messaging-app-api.onrender.com/conversation et le POST https://odin-messaging-app-api.onrender.com/conversation/add_message
+- Les deux points de terminaisons principaux de l'API sont le GET https://odin-messaging-app-api.onrender.com/conversations et le POST https://odin-messaging-app-api.onrender.com/conversations/add_message

@@ -6,14 +6,16 @@ const requireAuth = require("../middleware/requireAuth");
 // require auth for all conversation routes
 router.use(requireAuth);
 
-// #1 Conversations
+// get all conversations
 router.get("/", conversationController.get_conversations);
 
-router.post("/", conversationController.get_conversation);
+// get a conversation
+router.get("/:user1_id/:user2_id", conversationController.get_conversation);
 
-// #2 Conversation's Messages
-router.post("/add_message", conversationController.add_message);
+// add message
+router.post("/message", conversationController.add_conversation_message);
 
-router.delete("/delete_message", conversationController.delete_message);
+// delete message
+router.delete("/message", conversationController.delete_conversation_message);
 
 module.exports = router;

@@ -22,7 +22,7 @@ export const useLogin = () => {
     }
 
     const response = await fetch(
-      "https://odin-messaging-app-api.onrender.com/user/login",
+      "https://odin-messaging-app-api.onrender.com/users/login",
       {
         method: "POST",
         headers: {

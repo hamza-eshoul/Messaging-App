@@ -16,7 +16,7 @@ const UpdateProfileImage = ({
 }) => {
   const [previewSource, setPreviewSource] = useState("");
   const { updateUser, isPending, error } = useUpdateUser(
-    "https://odin-messaging-app-api.onrender.com/user/profile_image"
+    "https://odin-messaging-app-api.onrender.com/users/profile_image"
   );
 
   useEffect(() => {
@@ -47,10 +47,7 @@ const UpdateProfileImage = ({
   };
 
   const uploadImage = async (imageUrl) => {
-    const user_id = userProfile._id;
-
     const updated_user = await updateUser({
-      user_id,
       imageUrl,
     });
 

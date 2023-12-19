@@ -14,7 +14,7 @@ export const useFetchProfile = (profile_id) => {
     setError(null);
 
     const response = await fetch(
-      `https://odin-messaging-app-api.onrender.com/user/${profile_id}`,
+      `https://odin-messaging-app-api.onrender.com/users/${profile_id}`,
       {
         headers: {
           Authorization: `Bearer ${user.token}`,

@@ -14,20 +14,14 @@ export const useFetchConversation = (selectedUserConversation) => {
     setConversation(null);
     setError(null);
 
-    const conversation_info = {
-      user1_id: user._id,
-      user2_id: selectedUserConversation._id,
-    };
-
     const response = await fetch(
-      "https://odin-messaging-app-api.onrender.com/conversation",
+      `https://odin-messaging-app-api.onrender.com/conversations/${user1_id}/${user2_id}`,
       {
-        method: "POST",
+        method: "GET",
         headers: {
           Authorization: `Bearer ${user.token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(conversation_info),
       }
     );
 
