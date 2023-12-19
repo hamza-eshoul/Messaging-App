@@ -6,6 +6,7 @@ import defaultProfile from "../../assets/images/defaultProfile.png";
 // icons
 import { FaEdit } from "react-icons/fa";
 import { BsFillCameraFill, BsCamera2 } from "react-icons/bs";
+import { SiPreact } from "react-icons/si";
 
 // components
 import Overlay from "../../components/Overlay";
@@ -101,10 +102,16 @@ const ProfileDataLoggedInUser = ({ userProfile, setUserProfile }) => {
               {userProfile.firstName} {userProfile.lastName}
             </h2>
 
-            <FaEdit
-              className="cursor-pointer text-xl hover:opacity-50 sm:text-2xl"
-              onClick={() => setIsUpdateProfileData(true)}
-            />
+            {userProfile.firstName + userProfile.lastName == "HamzaEshoul" && (
+              <SiPreact className="cursor-pointer text-xl hover:opacity-50 sm:text-3xl" />
+            )}
+
+            {userProfile.firstName + userProfile.lastName !== "HamzaEshoul" && (
+              <FaEdit
+                className="cursor-pointer text-xl hover:opacity-50 sm:text-2xl"
+                onClick={() => setIsUpdateProfileData(true)}
+              />
+            )}
           </div>
 
           <div className="text-sm text-zinc-500 sm:text-base">

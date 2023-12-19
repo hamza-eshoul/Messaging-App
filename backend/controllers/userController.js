@@ -184,7 +184,6 @@ exports.update_user_cover_image = async (req, res) => {
         folder: "messaging_app_profile_cover_images",
       });
 
-      // find user and update his coverImage field
       const updatedUser = await User.findByIdAndUpdate(
         user_id,
         {
